@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { LOGIN_PATH } from "@/lib/auth/constants";
+import { notifySessionExpired } from "@/lib/auth/session";
 
 type ErrorBody = {
   code?: string;
@@ -7,20 +7,43 @@ type ErrorBody = {
   details?: unknown;
 };
 
+export type PageInfo = {
+  limit?: number;
+  hasNext?: boolean;
+  nextCursor?: string | null;
+};
+
+export type ApiMeta = {
+  requestId?: string;
+  timestamp?: string;
+  page?: PageInfo;
+};
+
+export type ApiResult<T> = {
+  data: T;
+  meta: ApiMeta;
+};
+
 type SuccessEnvelope<T> = {
   success: true;
   data: T;
-  meta?: unknown;
+  meta?: ApiMeta;
 };
 
 type ErrorEnvelope = {
   success: false;
   error?: ErrorBody;
+  meta?: ApiMeta;
 };
 
 export type ApiRequestOptions = RequestInit & {
   /** When true, a 401 does not trigger refresh-and-retry. */
   skipAuthRefresh?: boolean;
+};
+
+type FieldError = {
+  field?: unknown;
+  messages?: unknown;
 };
 
 export class ApiError extends Error {
@@ -43,14 +66,33 @@ export class ApiError extends Error {
     this.details = params.details;
     this.requestId = params.requestId;
   }
+
+  /** Maps VALIDATION_ERROR (and the same details shape) onto RHF field names. */
+  fieldErrors(): Record<string, string> {
+    if (!Array.isArray(this.details)) return {};
+    const errors: Record<string, string> = {};
+    for (const item of this.details) {
+      if (!isRecord(item)) continue;
+      const field = (item as FieldError).field;
+      const messages = (item as FieldError).messages;
+      if (typeof field !== "string" || !Array.isArray(messages)) continue;
+      const text = messages.filter((message): message is string => typeof message === "string");
+      if (text.length > 0) errors[field] = text.join(" ");
+    }
+    return errors;
+  }
+
+  get retryAfterSeconds(): number | undefined {
+    if (!isRecord(this.details)) return undefined;
+    const value = this.details.retryAfterSeconds;
+    return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+  }
 }
 
 let refreshPromise: Promise<boolean> | null = null;
 
 function redirectToLogin(): void {
-  if (typeof window === "undefined") return;
-  if (window.location.pathname === LOGIN_PATH) return;
-  window.location.assign(LOGIN_PATH);
+  notifySessionExpired();
 }
 
 let onUnauthorized: () => void = redirectToLogin;
@@ -82,8 +124,36 @@ function resolveUrl(path: string): string {
   return `${base}${suffix}`;
 }
 
-function readRequestId(response: Response, fallback: string): string {
-  return response.headers.get("X-Request-ID") ?? fallback;
+function apiPathname(path: string): string {
+  const withoutQuery = path.split("?")[0] ?? path;
+  if (withoutQuery.startsWith("http://") || withoutQuery.startsWith("https://")) {
+    const pathname = new URL(withoutQuery).pathname.replace(/^\/api\/v1(?=\/|$)/, "");
+    return pathname.length > 0 ? pathname : "/";
+  }
+  return withoutQuery.startsWith("/") ? withoutQuery : `/${withoutQuery}`;
+}
+
+/**
+ * Login, refresh, OTP, and password routes must surface their own 401s.
+ * Refreshing them would hide INVALID_CREDENTIALS / OTP_INVALID and can loop.
+ */
+export function skipsAuthRefresh(path: string): boolean {
+  const pathname = apiPathname(path);
+  return (
+    pathname === "/auth/login" ||
+    pathname === "/auth/refresh" ||
+    pathname.startsWith("/auth/otp/") ||
+    pathname.startsWith("/auth/password/")
+  );
+}
+
+function readRequestId(response: Response, body: unknown, fallback: string): string {
+  const header = response.headers.get("X-Request-ID");
+  if (header) return header;
+  if (isRecord(body) && isRecord(body.meta) && typeof body.meta.requestId === "string") {
+    return body.meta.requestId;
+  }
+  return fallback;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -96,6 +166,13 @@ function isSuccessEnvelope(value: unknown): value is SuccessEnvelope<unknown> {
 
 function isErrorEnvelope(value: unknown): value is ErrorEnvelope {
   return isRecord(value) && value.success === false;
+}
+
+function readMeta(body: unknown): ApiMeta {
+  if (isRecord(body) && isRecord(body.meta)) {
+    return body.meta as ApiMeta;
+  }
+  return {};
 }
 
 async function parseBody(response: Response): Promise<unknown> {
@@ -132,17 +209,8 @@ function errorFromBody(
   });
 }
 
-function unwrap<T>(body: unknown, response: Response, requestId: string): T {
-  if (isErrorEnvelope(body)) {
-    throw errorFromBody(
-      body,
-      response.status,
-      requestId,
-      response.statusText || "Request failed",
-    );
-  }
-
-  if (!response.ok) {
+function unwrapResult<T>(body: unknown, response: Response, requestId: string): ApiResult<T> {
+  if (isErrorEnvelope(body) || !response.ok) {
     throw errorFromBody(
       body,
       response.status,
@@ -152,10 +220,10 @@ function unwrap<T>(body: unknown, response: Response, requestId: string): T {
   }
 
   if (isSuccessEnvelope(body)) {
-    return body.data as T;
+    return { data: body.data as T, meta: readMeta(body) };
   }
 
-  return body as T;
+  return { data: body as T, meta: {} };
 }
 
 async function refreshSession(): Promise<boolean> {
@@ -184,10 +252,10 @@ function refreshOnce(): Promise<boolean> {
   return refreshPromise;
 }
 
-export async function apiClient<T>(
+async function perform<T>(
   path: string,
-  options: ApiRequestOptions = {},
-): Promise<T> {
+  options: ApiRequestOptions,
+): Promise<ApiResult<T>> {
   const { skipAuthRefresh = false, headers: initHeaders, ...init } = options;
   const requestId = createRequestId();
   const headers = new Headers(initHeaders);
@@ -220,21 +288,32 @@ export async function apiClient<T>(
     });
   }
 
-  if (response.status === 401 && !skipAuthRefresh) {
+  const allowRefresh = !skipAuthRefresh && !skipsAuthRefresh(path);
+  if (response.status === 401 && allowRefresh) {
     const refreshed = await refreshOnce();
     if (refreshed) {
-      return apiClient<T>(path, { ...options, skipAuthRefresh: true });
+      return perform<T>(path, { ...options, skipAuthRefresh: true });
     }
     onUnauthorized();
     const body = await parseBody(response);
-    throw errorFromBody(
-      body,
-      401,
-      readRequestId(response, requestId),
-      "Your session has expired",
-    );
+    throw errorFromBody(body, 401, readRequestId(response, body, requestId), "Your session has expired");
   }
 
   const body = await parseBody(response);
-  return unwrap<T>(body, response, readRequestId(response, requestId));
+  return unwrapResult<T>(body, response, readRequestId(response, body, requestId));
+}
+
+export async function apiRequest<T>(
+  path: string,
+  options: ApiRequestOptions = {},
+): Promise<ApiResult<T>> {
+  return perform<T>(path, options);
+}
+
+export async function apiClient<T>(
+  path: string,
+  options: ApiRequestOptions = {},
+): Promise<T> {
+  const result = await apiRequest<T>(path, options);
+  return result.data;
 }

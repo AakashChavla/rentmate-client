@@ -4,9 +4,10 @@ import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { env } from "@/env";
-import { adminNav, isNavActive, type NavLink } from "@/lib/navigation";
+import { isNavActive, visibleAdminNav, type NavLink } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
 
 type AdminSidebarProps = {
   collapsed?: boolean;
@@ -54,6 +55,9 @@ export function AdminSidebar({
   onNavigate,
   showCollapseToggle = false,
 }: AdminSidebarProps) {
+  const { permissions } = useAuth();
+  const nav = visibleAdminNav(permissions);
+
   return (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div
@@ -93,7 +97,7 @@ export function AdminSidebar({
         ) : null}
       </div>
       <nav aria-label="Admin" className="flex-1 space-y-4 overflow-y-auto p-3">
-        {adminNav.map((group) => (
+        {nav.map((group) => (
           <div key={group.label} className="space-y-1">
             {group.children ? (
               <p

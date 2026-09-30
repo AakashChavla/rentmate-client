@@ -58,11 +58,49 @@ src/
 
 Route groups do not change the URL. Admin and tenant both need a dashboard, complaints, and visitors, so the URLs are prefixed:
 
-- Admin: `/admin/dashboard`, `/admin/properties`, `/admin/tenants`, `/admin/billing/invoices`, `/admin/billing/payments`, `/admin/complaints`, `/admin/visitors`, `/admin/reports`, `/admin/settings/organization`, `/admin/settings/users`, `/admin/settings/roles`
+- Admin: `/admin/dashboard`, `/admin/properties`, `/admin/tenants`, `/admin/billing/invoices`, `/admin/billing/payments`, `/admin/complaints`, `/admin/visitors`, `/admin/reports`, `/admin/settings/organization`, `/admin/settings/users`, `/admin/settings/roles`, `/admin/profile`
 - Tenant: `/tenant/dashboard`, `/tenant/my-lease`, `/tenant/payments`, `/tenant/complaints`, `/tenant/visitors`, `/tenant/profile`
-- Auth: `/login`, `/verify-otp`, `/forgot-password`
+- Auth: `/login`, `/login/otp`, `/verify-otp`, `/forgot-password`
 
-Phase 1 pages are placeholders. The login screen validates email and password and does not call the API yet.
+## Authentication
+
+Sign-in is cookie based. The browser never reads `rm_access` or `rm_refresh`, and this app does not write tokens to `localStorage`, `sessionStorage`, or a JavaScript-readable cookie.
+
+1. `POST /auth/login` (or OTP verify / password flows) sets httpOnly cookies on the API origin: `rm_access`, `rm_refresh` (path limited to refresh), and `rm_session=1`.
+2. Every API call uses `credentials: 'include'`.
+3. `GET /auth/me` loads the signed-in user into TanStack Query (`['me']`).
+4. A 401 on a normal request triggers one shared `POST /auth/refresh`, then a single retry. Login, refresh, OTP, and password routes do not refresh.
+5. If refresh fails, the query cache is cleared, one "Session expired" toast is shown, and the browser goes to `/login?next=<path>`.
+6. `POST /auth/logout` clears the cookies and this app's query cache.
+
+`src/middleware.ts` treats `rm_session` as "maybe logged in" only. Missing cookie on `/admin` or `/tenant` redirects to `/login?next=`. A cookie on `/login` or `/verify-otp` sends the browser to `/admin/dashboard`; the client `AuthGuard` then sends TENANT-only users to `/tenant/dashboard`. The API is the authority for permissions.
+
+In production the server `COOKIE_DOMAIN` must be a shared parent (for example `.rentmate.com`) so middleware on the app host can see `rm_session`. On localhost, ports 3000 and 3001 are the same site.
+
+### Demo accounts
+
+From the server seed (`SEED_DEMO_PASSWORD`, default `DemoUser12345`):
+
+| Email | Role | Lands on |
+| --- | --- | --- |
+| `demo@rentmate.local` | Organization owner | `/admin/dashboard` |
+| `tenant@rentmate.local` | Tenant | `/tenant/dashboard` |
+
+Other seeded users share the same password: `property-manager@`, `accountant@`, `receptionist@`, `maintenance@`, and `security@rentmate.local`.
+
+OTP and password-reset codes are printed in the server log when `AUTH_DEV_LOG_OTP=true`.
+
+### Regenerate API types
+
+With `rentmate-server` running (`yarn migration:run && yarn seed && yarn start:dev`):
+
+```bash
+yarn api:types
+```
+
+That reads `http://localhost:3000/api/docs-json` (or `API_OPENAPI_URL`) and rewrites `src/lib/api/schema.d.ts`. Commit that file when the contract changes.
+
+A few generated schemas do not match the live JSON: user list `data` is an array, role and permission list DTOs are empty records, and user roles on `GET /users` omit assignment ids. The client narrows those at runtime. Removing a role needs an assignment id, which `POST /users/:id/roles` returns; roles that arrived only from the list cannot be removed until the server includes the id.
 
 ## Environment variables
 
@@ -79,25 +117,20 @@ Copy `.env.example` to `.env.local`. `src/env.ts` validates these at build and s
 
 ## Working with the server repo
 
-1. Start `rentmate-server` so it listens on port 3000.
-2. Point this app at it with the env values above.
-3. Confirm the admin dashboard. `useHealth` calls `GET {NEXT_PUBLIC_API_ORIGIN}/health/ready`, which sits outside `/api/v1`. If the server is down, the card shows an unreachable state instead of crashing.
-4. When the server API changes, regenerate types and commit the result:
-
-   ```bash
-   yarn api:types
-   ```
-
-   `src/lib/api/schema.d.ts` is committed. The copy in this repo is a placeholder until the first successful generation.
+1. In `rentmate-server`, run `yarn migration:run && yarn seed && yarn start:dev` so the API listens on port 3000.
+2. Point this app at it with the env values above and run `yarn dev` (port 3001).
+3. Sign in as `demo@rentmate.local` / `DemoUser12345` and open `/admin/settings/users`. Sign in as `tenant@rentmate.local` with the same password and confirm the resident home.
+4. Confirm the admin dashboard health card. `useHealth` calls `GET {NEXT_PUBLIC_API_ORIGIN}/health/ready`, which sits outside `/api/v1`.
+5. When the server API changes, run `yarn api:types` and commit `src/lib/api/schema.d.ts`.
 
 ### Cookies and domains
 
-The API sets the session cookie (`rm_session` in this client; keep the name aligned with the server). This app never writes tokens to `localStorage` or `sessionStorage`. Requests use `credentials: 'include'`.
+The API sets `rm_access`, `rm_refresh`, and `rm_session`. This client only looks for `rm_session` in middleware and never reads the token cookies. Requests use `credentials: 'include'`.
 
-- Production: the site and the API must share a parent domain, for example `app.rentmate.com` and `api.rentmate.com`, so a SameSite cookie is sent to both.
+- Production: set `COOKIE_DOMAIN` to a shared parent such as `.rentmate.com` so `app.rentmate.com` and `api.rentmate.com` both receive the cookies.
 - Local development: `localhost:3000` and `localhost:3001` are the same site, so the cookie is visible to middleware and to `fetch`.
 
-`src/middleware.ts` only checks that the cookie exists. Role-based redirects (admin vs tenant) are still a TODO.
+`src/middleware.ts` only checks that `rm_session` exists. Role routing happens in the client layouts after `GET /auth/me`.
 
 ## Docker
 

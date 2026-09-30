@@ -4,13 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { env } from "@/env";
-import { isNavActive, tenantNav } from "@/lib/navigation";
+import { isNavActive, visibleTenantNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { UserMenu } from "@/components/layout/user-menu";
+import { useAuth } from "@/hooks/use-auth";
 
 export function TenantShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const { permissions } = useAuth();
+  const nav = visibleTenantNav(permissions);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -23,7 +26,7 @@ export function TenantShell({ children }: { children: ReactNode }) {
             {env.NEXT_PUBLIC_APP_NAME}
           </Link>
           <nav aria-label="Tenant" className="hidden items-center gap-1 md:flex">
-            {tenantNav.map((item) => {
+            {nav.map((item) => {
               const active = isNavActive(pathname, item.href);
               return (
                 <Link
@@ -55,12 +58,12 @@ export function TenantShell({ children }: { children: ReactNode }) {
         aria-label="Tenant mobile"
         className="fixed inset-x-0 bottom-0 z-30 border-t bg-background md:hidden"
       >
-        <ul className="grid grid-cols-6">
-          {tenantNav.map((item) => {
+        <ul className="flex">
+          {nav.map((item) => {
             const active = isNavActive(pathname, item.href);
             const Icon = item.icon;
             return (
-              <li key={item.href}>
+              <li key={item.href} className="min-w-0 flex-1">
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}

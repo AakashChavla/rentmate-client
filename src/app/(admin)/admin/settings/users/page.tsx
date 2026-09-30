@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { PlaceholderPage } from "@/components/shared/placeholder-page";
+import { RequirePermission } from "@/components/auth/require-permission";
+import { UsersScreen } from "@/components/users/users-screen";
 
 export const metadata: Metadata = {
   title: "Users",
 };
 
-export default function Page() {
+export default function UsersPage() {
   return (
-    <PlaceholderPage
-      title="Users"
-      description="People who can sign in to this organization."
-    />
+    <RequirePermission permission="user:read">
+      <UsersScreen />
+    </RequirePermission>
   );
 }

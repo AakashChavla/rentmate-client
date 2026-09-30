@@ -20,7 +20,8 @@ import { EmptyState } from "@/components/shared/empty-state";
 export type DataTableProps<TData> = {
   columns: ColumnDef<TData, unknown>[];
   data: TData[];
-  hasMore?: boolean;
+  hasNext?: boolean;
+  nextCursor?: string | null;
   onLoadMore?: () => void;
   isLoadingMore?: boolean;
   emptyTitle?: string;
@@ -30,7 +31,8 @@ export type DataTableProps<TData> = {
 export function DataTable<TData>({
   columns,
   data,
-  hasMore = false,
+  hasNext = false,
+  nextCursor = null,
   onLoadMore,
   isLoadingMore = false,
   emptyTitle = "Nothing here yet",
@@ -74,11 +76,12 @@ export function DataTable<TData>({
           ))}
         </TableBody>
       </Table>
-      {hasMore ? (
+      {hasNext ? (
         <div className="flex justify-center border-t p-3">
           <Button
             type="button"
             variant="outline"
+            data-next-cursor={nextCursor ?? ""}
             onClick={onLoadMore}
             disabled={isLoadingMore || !onLoadMore}
           >

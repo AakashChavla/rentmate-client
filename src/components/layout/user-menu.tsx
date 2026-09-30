@@ -1,7 +1,9 @@
 "use client";
 
-import { LogOut } from "lucide-react";
-import { toast } from "sonner";
+import { LogOut, UserRound } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +26,12 @@ function initials(name: string): string {
 }
 
 export function UserMenu() {
-  const { user } = useAuth();
-  const name = user?.name ?? "Account";
+  const { user, logout } = useAuth();
+  const pathname = usePathname();
+  const [pending, setPending] = useState(false);
+  const name = user?.fullName ?? "Account";
   const email = user?.email ?? "Not signed in";
+  const profileHref = pathname.startsWith("/tenant") ? "/tenant/profile" : "/admin/profile";
 
   return (
     <DropdownMenu>
@@ -51,11 +56,18 @@ export function UserMenu() {
           <span className="block truncate text-xs text-muted-foreground">{email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={profileHref}>
+            <UserRound />
+            Profile
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
-          onSelect={() => {
-            toast.message("Sign out is not connected yet", {
-              description: "Session logout will call the RentMate API in a later phase.",
-            });
+          disabled={pending}
+          onSelect={(event) => {
+            event.preventDefault();
+            setPending(true);
+            void logout();
           }}
         >
           <LogOut />

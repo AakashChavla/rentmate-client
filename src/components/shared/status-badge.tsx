@@ -2,6 +2,8 @@ import { Badge, type BadgeProps } from "@/components/ui/badge";
 
 const STATUS_VARIANTS: Record<string, BadgeProps["variant"]> = {
   active: "default",
+  invited: "secondary",
+  suspended: "destructive",
   paid: "default",
   open: "secondary",
   pending: "outline",

@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { PlaceholderPage } from "@/components/shared/placeholder-page";
+import { ProfileScreen } from "@/components/account/profile-screen";
 
 export const metadata: Metadata = {
   title: "Profile",
 };
 
-export default function Page() {
-  return (
-    <PlaceholderPage
-      title="Profile"
-      description="Your contact details and preferences."
-    />
-  );
+export default function TenantProfilePage() {
+  return <ProfileScreen />;
 }

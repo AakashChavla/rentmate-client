@@ -1,12 +1,14 @@
-export type AuthUser = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-};
+import type { MeResponse } from "@/lib/api/resources/auth";
 
-export type AuthState = {
-  user: AuthUser | null;
+export type AuthContextValue = {
+  user: MeResponse["user"] | null;
+  organization: MeResponse["organization"] | null;
+  roles: MeResponse["roles"];
   permissions: string[];
+  isPlatformAdmin: boolean;
   isLoading: boolean;
+  isAuthenticated: boolean;
+  login: (input: { email: string; password: string }) => Promise<MeResponse>;
+  logout: () => Promise<void>;
+  refetch: () => Promise<MeResponse | undefined>;
 };

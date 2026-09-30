@@ -1,0 +1,7 @@
+.next
+node_modules
+coverage
+yarn.lock
+src/lib/api/schema.d.ts
+public
+*.woff

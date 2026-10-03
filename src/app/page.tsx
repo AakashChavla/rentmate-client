@@ -1,4 +1,4 @@
-import { FoundationPage } from '../features/foundation';
-export default function HomePage(): React.JSX.Element {
-  return <FoundationPage />;
+import { LandingPage } from '../features/foundation';
+export default function Home(): React.JSX.Element {
+  return <LandingPage />;
 }

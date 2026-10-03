@@ -58,7 +58,7 @@ module.exports = {
     },
     enhancedResolveOptions: {
       exportsFields: ['exports'],
-      extensions: ['.ts', '.tsx', '.js', '.json'],
+      extensions: ['.ts', '.tsx', '.d.ts', '.js', '.json'],
       conditionNames: ['types', 'react-server', 'import', 'require', 'node', 'default'],
     },
   },

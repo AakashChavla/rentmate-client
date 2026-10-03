@@ -65,7 +65,14 @@ export default ts.config(
     rules: { 'no-restricted-globals': 'off' },
   },
   {
-    files: ['**/*.constants.ts', 'src/config/**/*.ts', '**/*.test.{ts,tsx}', 'tools/**/*.ts'],
+    files: [
+      '**/*.constants.ts',
+      'src/config/**/*.ts',
+      '**/*.test.{ts,tsx}',
+      'src/test/**/*.tsx',
+      'src/test/**/*.ts',
+      'tools/**/*.ts',
+    ],
     rules: {
       '@typescript-eslint/no-magic-numbers': 'off',
       'no-restricted-syntax': 'off',

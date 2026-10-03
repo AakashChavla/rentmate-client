@@ -1,31 +1,24 @@
 # RentMate web
 
-Phase 0 provides a minimal Next.js 14 App Router page with English/Hindi, Tailwind/shadcn tokens, lazy reduced-motion animations, nonce CSP and injectable application services. Business features and authentication are future phases.
+Phase 1 supplies the bilingual animated landing page, light/dark design system, reusable UI primitives, admin/tenant/auth shells, route placeholders and injected health/API services. Authentication and rental workflows arrive in later phases.
 
-Use Node 20.20.2 and Corepack Yarn 1.22.22. Read [AGENTS.md](AGENTS.md) and [status](docs/ai/10-roadmap-and-status.md).
+Use Node 20.20.2 and Corepack Yarn 1.22.22. Read [AGENTS.md](AGENTS.md), [status](docs/ai/10-roadmap-and-status.md) and [Phase 1 report](docs/ai/15-phase1-report.md).
 
 ```powershell
 corepack enable
 yarn install --frozen-lockfile
-yarn dev
-```
-
-The client binds 127.0.0.1:3001. NEXT_PUBLIC_API_URL defaults to http://localhost:3000; see .env.example. Switch languages from the page. The preference cookie carries no authentication token.
-
-```text
-yarn verify:quick
-yarn rules:proof
-yarn i18n:types
 yarn api:types
-yarn gen module
-yarn gen integration
-yarn gen processor
-yarn build
-yarn start
+yarn dev
+yarn verify
+yarn rules:proof
 ```
 
-Always export the server OpenAPI before generating client types. Generated contracts currently contain only the health endpoint. yarn verify executes the same Phase 0 checks as verify:quick.
+Export server OpenAPI before generating types. NEXT_PUBLIC_API_URL defaults to http://localhost:3000 and is embedded at build time. The client binds loopback port 3001. Set the server CORS_ORIGIN to the client origin. Tenant routes use /tenant/* to avoid colliding with admin route-group paths.
 
-On Windows, SWC may reject writable cache ancestors. Create a private directory directly under your user profile, grant only your user, SYSTEM and Administrators inherited full control, then set `$env:SWC_NATIVE_BINDING_CACHE = Join-Path $env:USERPROFILE 'RentMate-swc-native-cache'` before build/dev/start. The verified cache already exists on this machine. Do not disable native integrity checks.
+Dockerfile builds Next standalone output, copies static/public assets and runs as node. docker compose up -d --build starts the client; CLIENT_EXPOSED_PORT changes its loopback host port. The workspace parent Compose file includes both repositories. Supply DB_PASSWORD locally for the database and align public API URL/CORS with any overridden ports.
 
-Quick verification passed locally. Dependency audits remain failing; Next.js 14 has critical advisories requiring a newer major version, and braces has an unpatched tooling advisory. Release is blocked. Remote CI/security scanners and Docker/Postgres/Redis were not verified. See [the full report](docs/ai/14-phase0-report.md).
+Language selection persists only the non-sensitive NEXT_LOCALE preference. Themes persist rm_theme. Motion is lazy-loaded and reducedMotion=user; controls, labels, placeholders and errors use en/hi catalogs. Permission-filtered navigation previews behavior; server-side authenticated authorization is Phase 2 work. Refresh is intentionally disabled until its real endpoint exists.
+
+On Windows set SWC_NATIVE_BINDING_CACHE to the protected RentMate-swc-native-cache directory under your user profile before build/dev/start. Do not disable native integrity checks. A packaged deployment runs .next/standalone/server.js with public and .next/static copied alongside it; yarn start is a local smoke command.
+
+Vitest/RTL/MSW/jest-axe cover localization, shells, HTTP behavior, accessibility and reduced-motion policy. Hindi and browser visual/contrast review remain required before production. Audits currently block release on the requested Next.js 14 and tooling dependencies; do not waive the audit gate.

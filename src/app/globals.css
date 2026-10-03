@@ -4,6 +4,9 @@
 :root {
   --background: 220 33% 99%;
   --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --border: 220 20% 90%;
   --primary: 239 72% 52%;
   --primary-foreground: 0 0% 100%;
   --muted: 220 20% 95%;
@@ -12,15 +15,24 @@
   --warning: 32 90% 32%;
   --danger: 0 72% 42%;
   --radius: 1rem;
-  --brand-gradient: linear-gradient(135deg, #4f46e5, #0d9488);
+  --brand-gradient: linear-gradient(135deg, #4f46e5, #0f766e);
 }
 .dark {
   --background: 222 47% 9%;
   --foreground: 210 40% 98%;
+  --card: 222 35% 12%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 28% 23%;
   --primary: 234 89% 74%;
   --primary-foreground: 222 47% 11%;
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 72%;
+  --success: 166 55% 63%;
+  --warning: 38 90% 70%;
+  --danger: 0 80% 74%;
+}
+html {
+  scroll-behavior: smooth;
 }
 body {
   background: hsl(var(--background));
@@ -30,7 +42,91 @@ body {
 .font-display {
   font-family: var(--font-display), var(--font-body), sans-serif;
 }
+.text-gradient {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-gradient {
+  background-image: linear-gradient(135deg, #a5b4fc, #5eead4);
+}
+.mesh {
+  background:
+    radial-gradient(ellipse at 85% 35%, rgb(13 148 136 / 0.1), transparent 48%),
+    radial-gradient(ellipse at 15% 15%, rgb(79 70 229 / 0.07), transparent 45%);
+}
 ::selection {
   background: #c7d2fe;
   color: #1e1b4b;
+}
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.3), transparent);
+  animation: shimmer var(--motion-shimmer) infinite;
+}
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+.dialog-overlay[data-state='open'] {
+  animation: fade-in var(--motion-short) ease-out;
+}
+.dialog-content[data-state='open'] {
+  animation: dialog-in var(--motion-short) ease-out;
+}
+.sheet-content[data-state='open'] {
+  animation: sheet-in var(--motion-short) ease-out;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

@@ -1,0 +1,39 @@
+import { render, type RenderResult } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
+import type { ReactNode } from 'react';
+import { ServicesProvider, type Services } from '../providers/ServicesProvider';
+import { QueryProvider } from '../providers/QueryProvider';
+import { ThemeProvider } from '../providers/ThemeProvider';
+import { MotionProvider } from '../providers/MotionProvider';
+import { CookieKeyValueStorage } from '../lib/cookie-key-value-storage';
+import { SystemClock } from '../lib/system-clock';
+import { FetchHttpClient } from '../lib/api/fetch-http-client';
+import { HttpHealthApi } from '../features/platform/api/health-api';
+import { CATALOGS } from '../lib/i18n/generated/i18n.generated';
+import type { SupportedLocale } from '../config/app.constants';
+export function testServices(): Services {
+  const http = new FetchHttpClient('http://localhost:3000');
+  return {
+    http,
+    health: new HttpHealthApi(http),
+    clock: new SystemClock(),
+    preferences: new CookieKeyValueStorage(),
+  };
+}
+export function renderApp(
+  node: ReactNode,
+  locale: SupportedLocale = 'en',
+  services = testServices(),
+): RenderResult {
+  return render(
+    <NextIntlClientProvider locale={locale} messages={CATALOGS[locale]}>
+      <ThemeProvider>
+        <ServicesProvider services={services}>
+          <QueryProvider>
+            <MotionProvider>{node}</MotionProvider>
+          </QueryProvider>
+        </ServicesProvider>
+      </ThemeProvider>
+    </NextIntlClientProvider>,
+  );
+}

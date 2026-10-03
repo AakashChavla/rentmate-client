@@ -1,0 +1,44 @@
+{
+  "name": "rentmate-client",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.14.0 <23",
+    "yarn": "1.22.22"
+  },
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "rules:check": "node tools/check-rules.ts",
+    "rules:proof": "node tools/check-rules.proof.cjs",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --config vitest.config.unit.ts",
+    "test:integration": "vitest run --config vitest.config.integration.ts",
+    "check": "yarn rules:check && yarn lint && yarn typecheck && yarn test",
+    "prepare": "husky",
+    "generate": "plop --plopfile codegen/plopfile.cjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "docker": "docker compose up --build -d"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "husky": "^9.1.7",
+    "plop": "^4.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.0",
+    "@tailwindcss/postcss": "^4.1.0"
+  }
+}

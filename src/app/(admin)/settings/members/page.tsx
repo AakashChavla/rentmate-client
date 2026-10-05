@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { USERS_ROUTE } from '@/config/auth.constants';
+import { DOMAIN_ROUTE } from '@/config/property.constants';
 export default function Page(): never {
-  redirect(USERS_ROUTE);
+  redirect(DOMAIN_ROUTE.TEAM);
 }

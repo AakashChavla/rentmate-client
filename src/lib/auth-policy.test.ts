@@ -1,5 +1,5 @@
 import { it, expect } from 'vitest';
-import { sanitizeNext, getHomeRoute, can, isPrivateRoute } from './auth-policy';
+import { sanitizeNext, getHomeRoute, can, canNavigate, isPrivateRoute } from './auth-policy';
 import { identity } from '../test/identity';
 it('rejects absolute, protocol-relative, encoded and backslash redirects, preserving safe queries', () => {
   for (const next of [
@@ -36,6 +36,24 @@ it('does not allow an expired platform administrator assignment to bypass permis
   me.isPlatformAdmin = true;
   me.roles = [{ ...firstRole(me), role: 'SUPER_ADMIN', expiresAt: '2000-01-01T00:00:00.000Z' }];
   expect(can(me, 'platform:delete')).toBe(false);
+});
+it('allows scoped property/team navigation while hiding organization-wide user and settings pages', () => {
+  const me = identity();
+  me.roles = [
+    {
+      ...firstRole(me),
+      scope: 'PROPERTY',
+      scopeId: 'property-a',
+      permissions: ['property:read', 'user:invite', 'user:read', 'organization:read', 'lease:read'],
+    },
+  ];
+  expect(canNavigate(me, 'property:read')).toBe(true);
+  expect(canNavigate(me, 'user:invite')).toBe(true);
+  expect(canNavigate(me, 'lease:read')).toBe(true);
+  expect(canNavigate(me, 'user:read')).toBe(false);
+  expect(canNavigate(me, 'organization:read')).toBe(false);
+  firstRole(me).expiresAt = '2000-01-01T00:00:00.000Z';
+  expect(canNavigate(me, 'property:read')).toBe(false);
 });
 
 function firstRole(me: ReturnType<typeof identity>): ReturnType<typeof identity>['roles'][number] {

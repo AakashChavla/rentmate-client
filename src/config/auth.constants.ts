@@ -94,4 +94,9 @@ export const USER_STATUS_VALUES = [
 export const USERS_ROUTE = '/settings/users';
 
 export const USER_STATUS = { ACTIVE: 'ACTIVE', SUSPENDED: 'SUSPENDED' } as const;
+export const GLOBAL_PAGE_PERMISSIONS: ReadonlySet<string> = new Set([
+  PERMISSION.USER_READ,
+  PERMISSION.ROLE_READ,
+  PERMISSION.ORGANIZATION_READ,
+]);
 export const NEXT_CHARACTER_LIMIT = 32;

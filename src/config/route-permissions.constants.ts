@@ -1,5 +1,7 @@
+import { DOMAIN_PERMISSION } from './property.constants';
 import { PERMISSION as P } from './auth.constants';
 export const ROUTE_PERMISSIONS = [
+  ['/settings/team', DOMAIN_PERMISSION.INVITE],
   ['/settings/users', P.USER_READ],
   ['/settings/roles', P.ROLE_READ],
   ['/settings', P.ORGANIZATION_READ],

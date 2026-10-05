@@ -8,6 +8,9 @@ import { MotionProvider } from '../providers/MotionProvider';
 import { CookieKeyValueStorage } from '../lib/cookie-key-value-storage';
 import { AuthProvider } from '../providers/AuthProvider';
 import { HttpAuthApi } from '../features/auth/api/auth-api';
+import { HttpPropertiesApi } from '../features/properties/api/properties-api';
+import { HttpOrganizationApi } from '../features/organization/api/organization-api';
+import { HttpInvitationsApi } from '../features/team/api/invitations-api';
 import { HttpUsersApi } from '../features/users/api/users-api';
 import { SingleFlightRefresh } from '../lib/api/refresh-coordinator';
 import { SystemClock } from '../lib/system-clock';
@@ -19,6 +22,9 @@ export function testServices(): Services {
   const http = new FetchHttpClient('http://localhost:3000');
   return {
     http,
+    properties: new HttpPropertiesApi(http),
+    organization: new HttpOrganizationApi(http),
+    invitations: new HttpInvitationsApi(http),
     auth: new HttpAuthApi(http),
     users: new HttpUsersApi(http),
     refresh: new SingleFlightRefresh(() => Promise.resolve()),

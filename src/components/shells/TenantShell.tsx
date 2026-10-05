@@ -8,7 +8,7 @@ import { ROUTES } from '../../config/app.constants';
 import { ThemeToggle } from '../shared/ThemeToggle';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 import { useOptionalAuth } from '../../providers/AuthProvider';
-import { can } from '../../lib/auth-policy';
+import { canNavigate } from '../../lib/auth-policy';
 import { Button } from '../ui/Button';
 import { cn } from '../../lib/utils';
 export function TenantShell({ children }: { children: ReactNode }): React.JSX.Element {
@@ -39,7 +39,7 @@ export function TenantShell({ children }: { children: ReactNode }): React.JSX.El
         aria-label={t('common.tenantSpace')}
         className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-border bg-card/95 px-2 pb-safe pt-2 backdrop-blur"
       >
-        {TENANT_NAV.filter((item) => can(auth?.me, item.permission)).map((item) => (
+        {TENANT_NAV.filter((item) => canNavigate(auth?.me, item.permission)).map((item) => (
           <Link
             key={item.href}
             href={item.href}

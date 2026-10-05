@@ -11,10 +11,17 @@ import {
   FileText,
   UserRound,
 } from 'lucide-react';
+import { DOMAIN_ROUTE, DOMAIN_PERMISSION } from './property.constants';
 import { PERMISSION as P, USERS_ROUTE } from './auth.constants';
 import { ROUTES } from './app.constants';
 import { messageKey } from '../lib/i18n/message-key';
 export const ADMIN_NAV = [
+  {
+    href: DOMAIN_ROUTE.TEAM,
+    label: messageKey('team.title'),
+    icon: Users,
+    permission: DOMAIN_PERMISSION.INVITE,
+  },
   { href: USERS_ROUTE, label: messageKey('auth.users'), icon: Users, permission: P.USER_READ },
   {
     href: ROUTES.DASHBOARD,
@@ -66,7 +73,7 @@ export const ADMIN_NAV = [
   },
   {
     href: ROUTES.SETTINGS,
-    label: messageKey('common.settings'),
+    label: messageKey('common.organization'),
     icon: Settings,
     permission: P.ORGANIZATION_READ,
   },

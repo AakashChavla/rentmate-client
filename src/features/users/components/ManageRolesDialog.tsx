@@ -11,7 +11,8 @@ import {
   DialogDescription,
 } from '../../../components/ui/Dialog';
 import { Button } from '../../../components/ui/Button';
-import { IDENTITY_ROLE, USERS_QUERY } from '../../../config/auth.constants';
+import { ScopeFields } from '../../team';
+import { IDENTITY_ROLE, USERS_QUERY, ROLE_SCOPE } from '../../../config/auth.constants';
 import { useAuthSubmission, AuthErrorNotice } from '../../auth';
 import type { User } from '../api/users-api';
 import type { UseQueryResult } from '@tanstack/react-query';
@@ -50,6 +51,10 @@ type RoleEditorStateContract = {
   submission: ReturnType<typeof useAuthSubmission>;
   change: (action: () => Promise<void>) => Promise<void>;
   services: ReturnType<typeof useServices>;
+  scope: string;
+  scopeId: string;
+  setScope: React.Dispatch<React.SetStateAction<string>>;
+  setScopeId: React.Dispatch<React.SetStateAction<string>>;
   role: string;
   setRole: React.Dispatch<React.SetStateAction<string>>;
   catalog: UseQueryResult<string[]>;
@@ -60,6 +65,8 @@ function useRoleEditorState({ user }: { user: User }): RoleEditorStateContract {
   const client = useQueryClient();
   const submission = useAuthSubmission(true);
   const [role, setRole] = useState('');
+  const [scope, setScope] = useState<string>(ROLE_SCOPE.ORGANIZATION);
+  const [scopeId, setScopeId] = useState('');
   const catalog = useQuery({
     queryKey: ['roles'],
     queryFn: () => services.users.roles(),
@@ -76,7 +83,21 @@ function useRoleEditorState({ user }: { user: User }): RoleEditorStateContract {
       await client.invalidateQueries({ queryKey: USERS_QUERY });
       toast.success(t('auth.saved'));
     });
-  return { t, user, current, submission, change, services, role, setRole, catalog };
+  return {
+    t,
+    user,
+    current,
+    submission,
+    change,
+    services,
+    role,
+    setRole,
+    catalog,
+    scope,
+    scopeId,
+    setScope,
+    setScopeId,
+  };
 }
 function AssignedRoles(view: ReturnType<typeof useRoleEditorState>): React.JSX.Element {
   const { t, user, current, submission, change, services } = view;
@@ -118,7 +139,11 @@ function RoleSelector(view: ReturnType<typeof useRoleEditorState>): React.JSX.El
       >
         <option value="">{t('auth.chooseRole')}</option>
         {catalog.data
-          ?.filter((value) => value !== IDENTITY_ROLE.SUPER_ADMIN)
+          ?.filter(
+            (value) =>
+              value !== IDENTITY_ROLE.SUPER_ADMIN &&
+              (view.scope === ROLE_SCOPE.ORGANIZATION || value !== IDENTITY_ROLE.OWNER),
+          )
           .map((value) => (
             <option key={value} value={value}>
               {identityLabel(t, value)}
@@ -135,20 +160,28 @@ function RoleDialogContent(view: ReturnType<typeof useRoleEditorState>): React.J
     <div className="space-y-5">
       <DialogTitle>{t('auth.manageRoles')}</DialogTitle>
       <DialogDescription>{user.email}</DialogDescription>
-      <p className="text-sm">{t('auth.organizationScope')}</p>
+      <ScopeFields
+        scope={view.scope}
+        scopeId={view.scopeId}
+        onChange={(scope, id) => {
+          view.setScope(scope);
+          view.setScopeId(id);
+          view.setRole('');
+        }}
+      />
       <AssignedRoles {...view} />
       <RoleSelector {...view} />
       <Button
-        disabled={!role || submission.busy}
+        disabled={!role || submission.busy || (view.scope === ROLE_SCOPE.PROPERTY && !view.scopeId)}
         onClick={() => {
-          void change(() => services.users.assign(user.id, role));
+          void change(() =>
+            services.users.assign(user.id, role, view.scope, view.scopeId || undefined),
+          );
         }}
       >
         {t('auth.assign')}
       </Button>
-      <Button variant="outline" disabled>
-        {t('auth.propertyScopeSoon')}
-      </Button>
+
       <AuthErrorNotice {...submission} />
       {catalog.error || current.error ? <p role="alert">{t('auth.usersError')}</p> : null}
     </div>

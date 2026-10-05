@@ -4,7 +4,13 @@ import type { HealthApi } from '../features/platform/api/health-api';
 import type { AuthApi } from '../features/auth/api/auth-api';
 import type { UsersApi } from '../features/users/api/users-api';
 import type { RefreshCoordinator } from '../lib/api/refresh-coordinator';
+import type { PropertiesApi } from '../features/properties/api/properties-api';
+import type { OrganizationApi } from '../features/organization/api/organization-api';
+import type { InvitationsApi } from '../features/team/api/invitations-api';
 export interface Services {
+  properties: PropertiesApi;
+  organization: OrganizationApi;
+  invitations: InvitationsApi;
   http: HttpClient;
   health: HealthApi;
   auth: AuthApi;

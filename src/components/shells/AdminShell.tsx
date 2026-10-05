@@ -4,6 +4,7 @@ import { DesktopSidebar, MobileSidebar } from './Sidebar';
 import { ShellTopbar } from './ShellTopbar';
 import { useOptionalAuth } from '../../providers/AuthProvider';
 import { PERMISSION } from '../../config/auth.constants';
+import { canNavigate } from '../../lib/auth-policy';
 
 export function AdminShell({
   children,
@@ -15,7 +16,12 @@ export function AdminShell({
   const [collapsed, setCollapsed] = useState(false);
   const auth = useOptionalAuth();
   const scoped = {
-    permissions: permissions ?? new Set([...(auth?.permissions ?? []), PERMISSION.AUTHENTICATED]),
+    permissions:
+      permissions ??
+      new Set([
+        ...(auth?.permissions.filter((permission) => canNavigate(auth.me, permission)) ?? []),
+        PERMISSION.AUTHENTICATED,
+      ]),
   };
   return (
     <div className="flex min-h-screen">

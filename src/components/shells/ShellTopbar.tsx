@@ -1,10 +1,11 @@
 'use client';
 import Link from 'next/link';
+import { PropertySwitcher } from '../../features/properties';
 import { useOptionalAuth } from '../../providers/AuthProvider';
 import { getHomeRoute } from '../../lib/auth-policy';
 import { HealthStatus } from '../../features/platform';
 import { useTranslations } from 'next-intl';
-import { Bell, Building2, ChevronDown, UserRound } from 'lucide-react';
+import { Bell, UserRound } from 'lucide-react';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 import { ThemeToggle } from '../shared/ThemeToggle';
 import { Button } from '../ui/Button';
@@ -82,16 +83,12 @@ function UserMenuToolbar(view: ReturnType<typeof useShellTopbarState>): React.JS
 }
 
 function ShellHeader(view: ReturnType<typeof useShellTopbarState>): React.JSX.Element {
-  const { mobileNavigation, t } = view;
+  const { mobileNavigation } = view;
   return (
     <header className="flex min-h-20 flex-wrap items-center justify-between gap-3 border-b border-border bg-card px-4 py-3 lg:px-8">
       <div className="flex items-center gap-3">
         {mobileNavigation}
-        <Button variant="outline" disabled>
-          <Building2 className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('common.allProperties')}</span>
-          <ChevronDown className="h-4 w-4" />
-        </Button>
+        <PropertySwitcher />
       </div>
       <UserMenuToolbar {...view} />
     </header>

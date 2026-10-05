@@ -1,0 +1,12 @@
+{
+  "title": "Organization settings",
+  "name": "Organization name",
+  "timezone": "Organization timezone",
+  "language": "Default language",
+  "loadError": "Could not load organization settings.",
+  "progress": "Onboarding progress",
+  "onboarding": "Set up your workspace",
+  "completed": "{done} of {total} steps complete",
+  "verifyEmail": "Verify your email",
+  "start": "Get started"
+}

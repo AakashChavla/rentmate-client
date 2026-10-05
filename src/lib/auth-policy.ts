@@ -6,6 +6,7 @@ import {
   PRIVATE_PREFIXES,
   PERMISSION,
   NEXT_CHARACTER_LIMIT,
+  GLOBAL_PAGE_PERMISSIONS,
 } from '../config/auth.constants';
 export function sanitizeNext(
   input: string | null | undefined,
@@ -57,6 +58,14 @@ export function can(
 }
 export function isPrivateRoute(path: string): boolean {
   return PRIVATE_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+}
+export function canNavigate(
+  me: components['schemas']['MeDto'] | null | undefined,
+  permission: string,
+): boolean {
+  if (can(me, permission)) return true;
+  if (GLOBAL_PAGE_PERMISSIONS.has(permission)) return false;
+  return !!me?.roles.some((role) => can(me, permission, { propertyId: role.scopeId }));
 }
 const SAFE_ORIGIN = 'https://rentmate.invalid';
 

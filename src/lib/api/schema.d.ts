@@ -340,6 +340,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OrganizationController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["OrganizationController_update"];
+        trace?: never;
+    };
+    "/api/v1/properties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PropertiesController_list"];
+        put?: never;
+        post: operations["PropertiesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/properties/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PropertiesController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["PropertiesController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["PropertiesController_update"];
+        trace?: never;
+    };
+    "/api/v1/properties/{id}/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PropertiesController_getConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["PropertiesController_setConfig"];
+        trace?: never;
+    };
+    "/api/v1/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["InvitationsController_list"];
+        put?: never;
+        post: operations["InvitationsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invitations/{id}/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["InvitationsController_resend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invitations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["InvitationsController_revoke"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invitations/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["InvitationsController_accept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -417,6 +545,9 @@ export interface components {
             timezone: string;
             /** @enum {string} */
             defaultLocale: "en" | "hi";
+            settings: {
+                [key: string]: unknown;
+            };
             isActive: boolean;
         };
         OnboardingStepDto: {
@@ -475,6 +606,118 @@ export interface components {
             scope: "ORGANIZATION" | "PROPERTY";
             /** Format: uuid */
             scopeId?: string;
+        };
+        OrganizationUpdateDto: {
+            name?: string;
+            timezone?: string;
+            /** @enum {string} */
+            defaultLocale?: "en" | "hi";
+            settings?: {
+                [key: string]: unknown;
+            };
+        };
+        PropertyDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            organizationId: string;
+            name: string;
+            /** @enum {string} */
+            type: "HOTEL" | "PG_HOSTEL" | "APARTMENT_COMPLEX" | "INDIVIDUAL_FLAT";
+            addressLine1: string;
+            addressLine2: string | null;
+            city: string;
+            state: string;
+            postalCode: string;
+            country: string;
+            timezone: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "ARCHIVED";
+            /** Format: date-time */
+            createdAt: string;
+        };
+        PropertyConfigDto: {
+            /** @enum {string} */
+            currency: "INR";
+            checkInTime?: string;
+            checkOutTime?: string;
+            rentDueDay?: number;
+            graceDays?: number;
+        };
+        CreatePropertyDto: {
+            name: string;
+            /** @enum {string} */
+            type: "HOTEL" | "PG_HOSTEL" | "APARTMENT_COMPLEX" | "INDIVIDUAL_FLAT";
+            addressLine1: string;
+            addressLine2?: string;
+            city: string;
+            state: string;
+            postalCode: string;
+            /** @default IN */
+            country: string;
+            timezone?: string;
+            configuration?: components["schemas"]["PropertyConfigDto"];
+        };
+        UpdatePropertyDto: {
+            name?: string;
+            addressLine1?: string;
+            addressLine2?: string;
+            city?: string;
+            state?: string;
+            postalCode?: string;
+            country?: string;
+            timezone?: string | null;
+            /** @enum {string} */
+            status?: "ACTIVE" | "ARCHIVED";
+        };
+        UpdatePropertyConfigDto: {
+            /** @enum {string} */
+            currency?: "INR";
+            checkInTime?: string;
+            checkOutTime?: string;
+            rentDueDay?: number;
+            graceDays?: number;
+        };
+        InvitationDto: {
+            /** Format: uuid */
+            id: string;
+            email: string;
+            /** @enum {string} */
+            roleKey: "SUPER_ADMIN" | "ORG_OWNER" | "PROPERTY_MANAGER" | "ACCOUNTANT" | "RECEPTIONIST" | "MAINTENANCE_STAFF" | "SECURITY_STAFF" | "TENANT";
+            /** @enum {string} */
+            scopeType: "ORGANIZATION" | "PROPERTY";
+            /** Format: uuid */
+            scopeId: string;
+            /** @enum {string} */
+            status: "PENDING" | "ACCEPTED" | "REVOKED" | "EXPIRED";
+            /** Format: date-time */
+            expiresAt: string;
+            /** @enum {string} */
+            locale: "en" | "hi";
+            /** Format: date-time */
+            createdAt: string;
+        };
+        CreateInvitationDto: {
+            /** Format: email */
+            email: string;
+            /** @enum {string} */
+            roleKey: "SUPER_ADMIN" | "ORG_OWNER" | "PROPERTY_MANAGER" | "ACCOUNTANT" | "RECEPTIONIST" | "MAINTENANCE_STAFF" | "SECURITY_STAFF" | "TENANT";
+            /** @enum {string} */
+            scopeType: "ORGANIZATION" | "PROPERTY";
+            /** Format: uuid */
+            scopeId?: string;
+        };
+        InvitationAcceptedDto: {
+            accepted: boolean;
+            /** @enum {string} */
+            roleKey: "SUPER_ADMIN" | "ORG_OWNER" | "PROPERTY_MANAGER" | "ACCOUNTANT" | "RECEPTIONIST" | "MAINTENANCE_STAFF" | "SECURITY_STAFF" | "TENANT";
+            /** @enum {string} */
+            locale: "en" | "hi";
+        };
+        AcceptInvitationDto: {
+            token: string;
+            fullName: string;
+            password: string;
         };
     };
     responses: never;
@@ -994,7 +1237,11 @@ export interface operations {
     };
     UsersController_list: {
         parameters: {
-            query?: never;
+            query?: {
+                cursor?: string;
+                status?: string;
+                search?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1216,6 +1463,503 @@ export interface operations {
                         /** @enum {boolean} */
                         success: true;
                         data: string[];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    OrganizationController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["OrganizationDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    OrganizationController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationUpdateDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["OrganizationDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_list: {
+        parameters: {
+            query?: {
+                propertyId?: string;
+                cursor?: string;
+                type?: string;
+                status?: string;
+                search?: string;
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePropertyDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePropertyDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_getConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyConfigDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PropertiesController_setConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePropertyConfigDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["PropertyConfigDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    InvitationsController_list: {
+        parameters: {
+            query?: {
+                cursor?: string;
+                scopeId?: string;
+                status?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["InvitationDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    InvitationsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInvitationDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["InvitationDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    InvitationsController_resend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["InvitationDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    InvitationsController_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    InvitationsController_accept: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcceptInvitationDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["InvitationAcceptedDto"];
                         meta: {
                             requestId: string;
                             /** Format: date-time */

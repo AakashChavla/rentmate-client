@@ -15,7 +15,7 @@ export interface UsersApi {
   get(id: string): Promise<User>;
   profile(patch: ProfilePatch): Promise<User>;
   update(id: string, patch: UserPatch): Promise<User>;
-  assign(id: string, role: string): Promise<void>;
+  assign(id: string, role: string, scope?: string, scopeId?: string): Promise<void>;
   remove(id: string, assignment: string): Promise<void>;
   roles(): Promise<string[]>;
   permissions(): Promise<string[]>;
@@ -38,8 +38,17 @@ export class HttpUsersApi implements UsersApi {
   public async update(id: string, patch: UserPatch): Promise<User> {
     return (await this.http.patch<User>(`${USER_API}/${id}`, patch)).data;
   }
-  public async assign(id: string, role: string): Promise<void> {
-    await this.http.post(`${USER_API}/${id}/roles`, { role, scope: ROLE_SCOPE.ORGANIZATION });
+  public async assign(
+    id: string,
+    role: string,
+    scope: string = ROLE_SCOPE.ORGANIZATION,
+    scopeId?: string,
+  ): Promise<void> {
+    await this.http.post(`${USER_API}/${id}/roles`, {
+      role,
+      scope,
+      ...(scopeId ? { scopeId } : {}),
+    });
   }
   public async remove(id: string, assignment: string): Promise<void> {
     await this.http.delete(`${USER_API}/${id}/roles/${assignment}`);

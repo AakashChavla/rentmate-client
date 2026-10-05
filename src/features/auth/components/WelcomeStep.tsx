@@ -1,4 +1,6 @@
 'use client';
+import { DOMAIN_ROUTE, DOMAIN_PERMISSION } from '../../../config/property.constants';
+import { useCan } from '../hooks/use-permission';
 import { m } from 'motion/react';
 import { CheckCircle2, Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -9,6 +11,7 @@ import { Button } from '../../../components/ui/Button';
 import { MOTION } from '../../../config/motion';
 export function WelcomeStep(): React.JSX.Element {
   const t = useTranslations();
+  const create = useCan(DOMAIN_PERMISSION.CREATE);
   const auth = useAuth();
   const router = useRouter();
   return (
@@ -30,10 +33,15 @@ export function WelcomeStep(): React.JSX.Element {
           </li>
         ))}
       </ul>
-      <Button disabled className="w-full">
+      <Button
+        disabled={!create}
+        onClick={() => {
+          router.push(DOMAIN_ROUTE.NEW);
+        }}
+        className="w-full"
+      >
         {t('auth.createProperty')}
       </Button>
-      <p className="text-xs text-muted-foreground">{t('auth.propertySoon')}</p>
       <Button
         className="w-full"
         onClick={() => {

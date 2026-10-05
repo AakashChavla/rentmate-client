@@ -5,7 +5,11 @@ import { cleanup } from '@testing-library/react';
 import { server } from './msw';
 vi.mock('next/navigation', async () => {
   const { navigation } = await import('./navigation');
-  return { useRouter: () => navigation, usePathname: () => '/dashboard' };
+  return {
+    useRouter: () => navigation,
+    usePathname: () => '/dashboard',
+    useSearchParams: () => new URLSearchParams(navigation.search),
+  };
 });
 vi.mock('motion/react', async (importOriginal) => {
   const actual = await importOriginal<typeof import('motion/react')>();

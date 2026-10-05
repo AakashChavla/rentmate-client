@@ -9,8 +9,8 @@ export function InputField({
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
 }): React.JSX.Element {
   const id = useId();
   const description = `${id}-description`;

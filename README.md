@@ -2,11 +2,12 @@
 
 Phase 1 supplies the bilingual animated landing page, light/dark design system, reusable UI primitives, admin/tenant/auth shells, route placeholders and injected health/API services. Authentication and rental workflows arrive in later phases.
 
-Use Node 20.20.2 and Corepack Yarn 1.22.22. Read [AGENTS.md](AGENTS.md), [status](docs/ai/10-roadmap-and-status.md) and [Phase 1 report](docs/ai/15-phase1-report.md).
+Use Node 26.10.0 and Corepack Yarn 4.18.1. Read [AGENTS.md](AGENTS.md), [status](docs/ai/10-roadmap-and-status.md) and [Phase 1 report](docs/ai/15-phase1-report.md).
 
 ```powershell
+npm install --global corepack@0.36.0
 corepack enable
-yarn install --frozen-lockfile
+yarn install --immutable
 yarn api:types
 yarn dev
 yarn verify
@@ -21,4 +22,6 @@ Language selection persists only the non-sensitive NEXT_LOCALE preference. Theme
 
 On Windows set SWC_NATIVE_BINDING_CACHE to the protected RentMate-swc-native-cache directory under your user profile before build/dev/start. Do not disable native integrity checks. A packaged deployment runs .next/standalone/server.js with public and .next/static copied alongside it; yarn start is a local smoke command.
 
-Vitest/RTL/MSW/jest-axe cover localization, shells, HTTP behavior, accessibility and reduced-motion policy. Hindi and browser visual/contrast review remain required before production. Audits currently block release on the requested Next.js 14 and tooling dependencies; do not waive the audit gate.
+Vitest/RTL/MSW/jest-axe cover localization, shells, HTTP behavior, accessibility and reduced-motion policy. Hindi and browser visual/contrast review remain required before production. Audits currently block release on the upstream braces advisory in tooling dependencies; do not waive the audit gate.
+
+Current dependency policy and compiler exceptions: [stable upgrade report](docs/ai/16-stable-upgrade-report.md). Refresh non-prerelease registry versions and rerun verification before each new phase. Keep older PostgreSQL volumes intact; a major upgrade needs a separate data migration.

@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../test/msw';
 import { FetchHttpClient } from './fetch-http-client';
@@ -6,11 +6,11 @@ import { ApiError } from './api-error';
 import { SingleFlightRefresh } from './refresh-coordinator';
 describe('HTTP transport contract', () => {
   it('unwraps envelopes, sends locale and request id, and includes credentials', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
     server.use(
       http.get('http://localhost:3000/health/ready', ({ request }) => {
         expect(request.headers.get('accept-language')).toBe('hi');
         expect(request.headers.get('X-Request-ID')).toBeTruthy();
-        expect(request.credentials).toBe('include');
         return HttpResponse.json(
           {
             success: true,
@@ -29,6 +29,10 @@ describe('HTTP transport contract', () => {
       status: string;
     }>('/health/ready');
     expect(result.data).toEqual({ status: 'ok' });
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.any(URL),
+      expect.objectContaining({ credentials: 'include' }),
+    );
     expect(result.requestId).toBe('server-id');
     expect(result.meta?.page).toEqual({ limit: 20, hasNext: true, nextCursor: 'cursor' });
   });

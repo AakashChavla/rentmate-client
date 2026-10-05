@@ -24,7 +24,7 @@ export default async function RootLayout({
 }): Promise<React.JSX.Element> {
   const locale = await getLocale();
   const messages = await getMessages();
-  const nonce = headers().get(HTTP_HEADERS.NONCE) ?? undefined;
+  const nonce = (await headers()).get(HTTP_HEADERS.NONCE) ?? undefined;
   const styles = {
     '--motion-short': `${String(MOTION.DURATION.SHORT)}s`,
     '--motion-shimmer': `${String(MOTION.DURATION.SHIMMER)}s`,

@@ -2,6 +2,7 @@ node_modules
 yarn.lock
 dist
 .next
+next-env.d.ts
 coverage
 src/core/i18n/generated
 src/lib/i18n/generated
@@ -11,3 +12,5 @@ src/lib/api/schema.d.ts
 .cache
 *.log
 tools/codegen/templates
+
+.yarn

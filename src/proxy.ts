@@ -6,7 +6,7 @@ import {
   DEVELOPMENT_ENVIRONMENT,
   createCsp,
 } from './config/csp.constants';
-export function middleware(request: NextRequest): NextResponse {
+export function proxy(request: NextRequest): NextResponse {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   const policy = createCsp(
     nonce,

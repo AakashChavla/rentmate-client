@@ -25,12 +25,13 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 });
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' });
+  server.listen({ onUnhandledFrame: 'error' });
 });
 afterEach(() => {
   cleanup();
   server.resetHandlers();
   vi.clearAllMocks();
+  vi.restoreAllMocks();
 });
 afterAll(() => {
   server.close();

@@ -1,6 +1,7 @@
 export class TestIntersectionObserver implements IntersectionObserver {
   public readonly root = null;
   public readonly rootMargin = '0px';
+  public readonly scrollMargin = '0px';
   public readonly thresholds = [0];
   private readonly targets = new Set<Element>();
   public constructor(private readonly callback: IntersectionObserverCallback) {}

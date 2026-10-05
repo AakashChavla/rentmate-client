@@ -1,14 +1,15 @@
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations } from 'next-intl/server';
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
+import { AuthProvider } from '../providers/AuthProvider';
 import type { ReactNode, CSSProperties } from 'react';
 import { ServicesProvider } from '../providers/ServicesProvider';
 import { MotionProvider } from '../providers/MotionProvider';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { QueryProvider } from '../providers/QueryProvider';
 import { Toaster } from '../components/ui/Sonner';
-import { DIRECTIONS, RTL_LOCALES, HTTP_HEADERS } from '../config/app.constants';
+import { DIRECTIONS, RTL_LOCALES, HTTP_HEADERS, COOKIE_NAMES } from '../config/app.constants';
 import { MOTION } from '../config/motion';
 import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
@@ -24,6 +25,7 @@ export default async function RootLayout({
 }): Promise<React.JSX.Element> {
   const locale = await getLocale();
   const messages = await getMessages();
+  const sessionHint = (await cookies()).has(COOKIE_NAMES.SESSION);
   const nonce = (await headers()).get(HTTP_HEADERS.NONCE) ?? undefined;
   const styles = {
     '--motion-short': `${String(MOTION.DURATION.SHORT)}s`,
@@ -40,10 +42,12 @@ export default async function RootLayout({
           <ThemeProvider {...(nonce ? { nonce } : {})}>
             <ServicesProvider>
               <QueryProvider>
-                <MotionProvider>
-                  {children}
-                  <Toaster />
-                </MotionProvider>
+                <AuthProvider sessionHint={sessionHint}>
+                  <MotionProvider>
+                    {children}
+                    <Toaster />
+                  </MotionProvider>
+                </AuthProvider>
               </QueryProvider>
             </ServicesProvider>
           </ThemeProvider>

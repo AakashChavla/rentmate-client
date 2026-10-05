@@ -31,7 +31,7 @@ export const ROUTES = {
   HEALTH: '/health/live',
   READY: '/health/ready',
 } as const;
-export const HTTP_METHODS = { GET: 'GET' } as const;
+export const HTTP_METHODS = { GET: 'GET', POST: 'POST', PATCH: 'PATCH', DELETE: 'DELETE' } as const;
 export const HTTP_HEADERS = {
   REQUEST_ID: 'X-Request-ID',
   ACCEPT_LANGUAGE: 'accept-language',

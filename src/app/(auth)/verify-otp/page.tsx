@@ -1,5 +1,4 @@
-import { AuthPlaceholder } from '@/features/foundation';
-import { messageKey } from '@/lib/i18n/message-key';
+import { RecoveryForm } from '@/features/auth';
 export default function Page(): React.JSX.Element {
-  return <AuthPlaceholder title={messageKey('common.verifyOtp')} />;
+  return <RecoveryForm />;
 }

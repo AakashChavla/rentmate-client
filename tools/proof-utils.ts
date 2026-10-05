@@ -1,4 +1,11 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  renameSync,
+  unlinkSync,
+} from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import assert from 'node:assert/strict';
@@ -11,7 +18,7 @@ export function withFixtures<T>(files: Record<string, string | undefined>, actio
         if (existsSync(target)) unlinkSync(target);
       } else {
         mkdirSync(dirname(target), { recursive: true });
-        writeFileSync(target, content);
+        writeFixture(target, content);
       }
     }
     return action();
@@ -51,4 +58,14 @@ export function requireRejection(
 }
 export function runTool(name: string): { status: number | null; output: string } {
   return runNode('node_modules/tsx/dist/cli.mjs', [`tools/${name}.ts`]);
+}
+
+function writeFixture(target: string, content: string | Buffer): void {
+  const temporary = target + '.proof-' + String(process.pid);
+  try {
+    writeFileSync(temporary, content);
+    renameSync(temporary, target);
+  } finally {
+    if (existsSync(temporary)) unlinkSync(temporary);
+  }
 }

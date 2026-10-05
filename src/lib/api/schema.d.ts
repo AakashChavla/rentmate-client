@@ -36,6 +36,310 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/register/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/register/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_resend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/otp/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_sendOtp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/otp/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_otpLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/password/forgot": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_forgot"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/password/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_reset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/password/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_change"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UsersController_profile"];
+        trace?: never;
+    };
+    "/api/v1/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UsersController_update"];
+        trace?: never;
+    };
+    "/api/v1/users/{id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UsersController_assign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/{id}/roles/{assignmentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["UsersController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RolesController_listRoles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RolesController_listPermissions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -50,6 +354,127 @@ export interface components {
             status: string;
             postgres: boolean;
             redis: boolean;
+        };
+        NeutralDto: {
+            /** @enum {boolean} */
+            accepted: true;
+        };
+        RegisterDto: {
+            email: string;
+            password: string;
+            fullName: string;
+            phone?: string;
+            organizationName: string;
+            /** @enum {string} */
+            locale: "en" | "hi";
+            acceptTerms: boolean;
+            /** @enum {string} */
+            termsVersion: "2026-10-05";
+        };
+        RoleAssignmentDto: {
+            permissions?: string[];
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            userId: string;
+            /** Format: uuid */
+            organizationId: string;
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "ORG_OWNER" | "PROPERTY_MANAGER" | "ACCOUNTANT" | "RECEPTIONIST" | "MAINTENANCE_STAFF" | "SECURITY_STAFF" | "TENANT";
+            /** @enum {string} */
+            scope: "ORGANIZATION" | "PROPERTY";
+            /** Format: uuid */
+            scopeId: string;
+            /** Format: date-time */
+            expiresAt: string | null;
+        };
+        UserDto: {
+            roles?: components["schemas"]["RoleAssignmentDto"][];
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            organizationId: string;
+            email: string;
+            fullName: string;
+            phone?: string | null;
+            /** @enum {string} */
+            locale: "en" | "hi";
+            /** @enum {string} */
+            status: "PENDING_VERIFICATION" | "INVITED" | "ACTIVE" | "SUSPENDED";
+            /** Format: date-time */
+            emailVerifiedAt: string | null;
+            /** Format: date-time */
+            lastLoginAt: string | null;
+            isPlatformAdmin: boolean;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        OrganizationDto: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            slug: string;
+            timezone: string;
+            /** @enum {string} */
+            defaultLocale: "en" | "hi";
+            isActive: boolean;
+        };
+        OnboardingStepDto: {
+            key: string;
+            done: boolean;
+        };
+        OnboardingDto: {
+            steps: components["schemas"]["OnboardingStepDto"][];
+        };
+        MeDto: {
+            user: components["schemas"]["UserDto"];
+            organization: components["schemas"]["OrganizationDto"];
+            roles: components["schemas"]["RoleAssignmentDto"][];
+            permissions: string[];
+            isPlatformAdmin: boolean;
+            onboarding: components["schemas"]["OnboardingDto"];
+        };
+        OtpDto: {
+            email: string;
+            code: string;
+        };
+        EmailDto: {
+            email: string;
+        };
+        LoginDto: {
+            email: string;
+            password: string;
+        };
+        ResetPasswordDto: {
+            email: string;
+            code: string;
+            password: string;
+        };
+        ChangePasswordDto: {
+            currentPassword: string;
+            password: string;
+        };
+        ProfileDto: {
+            fullName?: string;
+            phone?: string;
+            /** @enum {string} */
+            locale?: "en" | "hi";
+        };
+        UpdateUserDto: {
+            fullName?: string;
+            phone?: string;
+            /** @enum {string} */
+            locale?: "en" | "hi";
+            /** @enum {string} */
+            status?: "ACTIVE" | "SUSPENDED";
+        };
+        AssignRoleDto: {
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "ORG_OWNER" | "PROPERTY_MANAGER" | "ACCOUNTANT" | "RECEPTIONIST" | "MAINTENANCE_STAFF" | "SECURITY_STAFF" | "TENANT";
+            /** @enum {string} */
+            scope: "ORGANIZATION" | "PROPERTY";
+            /** Format: uuid */
+            scopeId?: string;
         };
     };
     responses: never;
@@ -94,6 +519,714 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReadyHealthDto"];
+                };
+            };
+        };
+    };
+    AuthController_register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OtpDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["MeDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_resend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["MeDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_sendOtp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_otpLogin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OtpDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["MeDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_forgot: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_reset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_change: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    AuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["MeDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_profile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UserDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UserDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UserDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UserDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_assign: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignRoleDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UsersController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RolesController_listRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: string[];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RolesController_listPermissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: string[];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
                 };
             };
         };

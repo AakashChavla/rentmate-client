@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ROUTES } from '../../config/app.constants';
 import { Entrance } from '../shared/Entrance';
-import { EmptyIllustration } from '../shared/EmptyIllustration';
+import { AuthBrandPanel } from '../shared/AuthBrandPanel';
 import { ThemeToggle } from '../shared/ThemeToggle';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 export async function AuthLayout({
@@ -19,17 +19,7 @@ export async function AuthLayout({
           {t('common.brand')}
         </Link>
         <Entrance>
-          <div className="my-24 max-w-md">
-            <div className="rounded-3xl bg-white/80 p-6">
-              <EmptyIllustration />
-            </div>
-            <h2 className="mt-10 font-display text-4xl font-bold leading-tight">
-              {t('common.authTitle')}
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/85">
-              {t('common.authDescription')}
-            </p>
-          </div>
+          <AuthBrandPanel />
         </Entrance>
         <p className="mt-auto text-sm text-white/80">{t('common.authNote')}</p>
       </aside>

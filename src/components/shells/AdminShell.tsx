@@ -2,7 +2,9 @@
 import { useState, type ReactNode } from 'react';
 import { DesktopSidebar, MobileSidebar } from './Sidebar';
 import { ShellTopbar } from './ShellTopbar';
-import { PreviewNotice } from './PreviewNotice';
+import { useOptionalAuth } from '../../providers/AuthProvider';
+import { PERMISSION } from '../../config/auth.constants';
+
 export function AdminShell({
   children,
   permissions,
@@ -11,7 +13,10 @@ export function AdminShell({
   permissions?: ReadonlySet<string>;
 }): React.JSX.Element {
   const [collapsed, setCollapsed] = useState(false);
-  const scoped = permissions ? { permissions } : {};
+  const auth = useOptionalAuth();
+  const scoped = {
+    permissions: permissions ?? new Set([...(auth?.permissions ?? []), PERMISSION.AUTHENTICATED]),
+  };
   return (
     <div className="flex min-h-screen">
       <DesktopSidebar
@@ -23,10 +28,7 @@ export function AdminShell({
       />
       <div className="min-w-0 flex-1">
         <ShellTopbar mobileNavigation={<MobileSidebar {...scoped} />} />
-        <main className="mx-auto max-w-7xl p-4 py-8 md:p-8">
-          <PreviewNotice />
-          {children}
-        </main>
+        <main className="mx-auto max-w-7xl p-4 py-8 md:p-8">{children}</main>
       </div>
     </div>
   );

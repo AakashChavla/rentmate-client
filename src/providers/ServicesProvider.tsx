@@ -1,19 +1,10 @@
 'use client';
-import { HttpHealthApi, type HealthApi } from '../features/platform/api/health-api';
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import { useLocale } from 'next-intl';
-import type { HttpClient } from '../lib/api/http-client';
-import { FetchHttpClient } from '../lib/api/fetch-http-client';
-import type { Clock, KeyValueStorage } from '../lib/ports';
-import { SystemClock } from '../lib/system-clock';
-import { CookieKeyValueStorage } from '../lib/cookie-key-value-storage';
+import { createServices } from './create-services';
+import type { Services } from './services.contract';
 import { environment } from '../lib/env';
-export interface Services {
-  http: HttpClient;
-  health: HealthApi;
-  clock: Clock;
-  preferences: KeyValueStorage;
-}
+export type { Services } from './services.contract';
 const ServicesContext = createContext<Services | undefined>(undefined);
 export function ServicesProvider({
   children,
@@ -23,19 +14,9 @@ export function ServicesProvider({
   services?: Services;
 }): React.JSX.Element {
   const locale = useLocale();
-  const http = useMemo(
-    () => new FetchHttpClient(environment.NEXT_PUBLIC_API_URL, () => locale),
-    [locale],
-  );
   const value = useMemo(
-    () =>
-      services ?? {
-        http,
-        health: new HttpHealthApi(http),
-        clock: new SystemClock(),
-        preferences: new CookieKeyValueStorage(),
-      },
-    [services, http],
+    () => services ?? createServices(environment.NEXT_PUBLIC_API_URL, () => locale),
+    [services, locale],
   );
   return <ServicesContext.Provider value={value}>{children}</ServicesContext.Provider>;
 }

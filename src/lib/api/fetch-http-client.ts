@@ -9,6 +9,7 @@ import { ApiError, type FieldError } from './api-error';
 import type { HttpClient, HttpResult } from './http-client';
 import type { RefreshCoordinator } from './refresh-coordinator';
 import { parseEnvelopeMeta } from './envelope-meta';
+import { AUTH_API } from '../../config/auth.constants';
 interface ErrorBody {
   error?: { code?: string; message?: string; details?: unknown };
 }
@@ -43,19 +44,49 @@ export class FetchHttpClient implements HttpClient {
     private readonly refresh?: RefreshCoordinator,
   ) {}
   public async get<T>(path: string, signal?: AbortSignal): Promise<HttpResult<T>> {
-    const response = await this.request(path, signal);
-    if (response.status === API_STATUS.UNAUTHORIZED && this.refresh?.enabled) {
+    return this.perform<T>(path, HTTP_METHODS.GET, undefined, signal);
+  }
+  public post<T>(path: string, body?: unknown): Promise<HttpResult<T>> {
+    return this.perform<T>(path, HTTP_METHODS.POST, body);
+  }
+  public patch<T>(path: string, body: unknown): Promise<HttpResult<T>> {
+    return this.perform<T>(path, HTTP_METHODS.PATCH, body);
+  }
+  public delete<T>(path: string): Promise<HttpResult<T>> {
+    return this.perform<T>(path, HTTP_METHODS.DELETE);
+  }
+  private async perform<T>(
+    path: string,
+    method: string,
+    body?: unknown,
+    signal?: AbortSignal,
+  ): Promise<HttpResult<T>> {
+    const response = await this.request(path, signal, method, body);
+    if (
+      response.status === API_STATUS.UNAUTHORIZED &&
+      this.refresh?.enabled &&
+      !new URL(path, this.baseUrl).pathname.startsWith(AUTH_API.PREFIX)
+    ) {
       await this.refresh.refresh();
-      return this.read<T>(await this.request(path, signal));
+      const retry = await this.request(path, signal, method, body);
+      if (retry.status === API_STATUS.UNAUTHORIZED) this.refresh.expire();
+      return this.read<T>(retry);
     }
     return this.read<T>(response);
   }
-  private request(path: string, signal: AbortSignal | undefined): Promise<Response> {
+  private request(
+    path: string,
+    signal: AbortSignal | undefined,
+    method: string,
+    body: unknown,
+  ): Promise<Response> {
     return fetch(new URL(path, this.baseUrl), {
-      method: HTTP_METHODS.GET,
+      method,
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
       credentials: 'include',
       ...(signal ? { signal } : {}),
       headers: {
+        ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
         [HTTP_HEADERS.REQUEST_ID]: crypto.randomUUID(),
         [HTTP_HEADERS.ACCEPT_LANGUAGE]: this.locale(),
       },

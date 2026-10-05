@@ -7,10 +7,13 @@ import { TENANT_NAV } from '../../config/nav';
 import { ROUTES } from '../../config/app.constants';
 import { ThemeToggle } from '../shared/ThemeToggle';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
-import { PreviewNotice } from './PreviewNotice';
+import { useOptionalAuth } from '../../providers/AuthProvider';
+import { can } from '../../lib/auth-policy';
+import { Button } from '../ui/Button';
 import { cn } from '../../lib/utils';
 export function TenantShell({ children }: { children: ReactNode }): React.JSX.Element {
   const t = useTranslations();
+  const auth = useOptionalAuth();
   const path = usePathname();
   return (
     <div className="min-h-screen pb-24">
@@ -21,17 +24,22 @@ export function TenantShell({ children }: { children: ReactNode }): React.JSX.El
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <ThemeToggle />
+          <Button
+            variant="ghost"
+            onClick={() => {
+              void auth?.logout();
+            }}
+          >
+            {t('common.signOut')}
+          </Button>
         </div>
       </header>
-      <main className="mx-auto max-w-4xl p-4 py-8">
-        <PreviewNotice />
-        {children}
-      </main>
+      <main className="mx-auto max-w-4xl p-4 py-8">{children}</main>
       <nav
         aria-label={t('common.tenantSpace')}
         className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-border bg-card/95 px-2 pb-safe pt-2 backdrop-blur"
       >
-        {TENANT_NAV.map((item) => (
+        {TENANT_NAV.filter((item) => can(auth?.me, item.permission)).map((item) => (
           <Link
             key={item.href}
             href={item.href}

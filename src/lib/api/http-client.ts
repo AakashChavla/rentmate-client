@@ -10,4 +10,7 @@ export interface HttpResult<T> {
 }
 export interface HttpClient {
   get<T>(path: string, signal?: AbortSignal): Promise<HttpResult<T>>;
+  post<T>(path: string, body?: unknown): Promise<HttpResult<T>>;
+  patch<T>(path: string, body: unknown): Promise<HttpResult<T>>;
+  delete<T>(path: string): Promise<HttpResult<T>>;
 }

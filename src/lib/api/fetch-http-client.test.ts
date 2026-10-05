@@ -64,7 +64,7 @@ describe('HTTP errors and refresh', () => {
       expect(failure.retryAfterSeconds).toBe(3);
     }
   });
-  it('coalesces refresh work but is disabled in Phase 1', async () => {
+  it('coalesces enabled refresh work', async () => {
     let calls = 0;
     const coordinator = new SingleFlightRefresh(async () => {
       calls += 1;
@@ -72,6 +72,6 @@ describe('HTTP errors and refresh', () => {
     });
     await Promise.all([coordinator.refresh(), coordinator.refresh()]);
     expect(calls).toBe(1);
-    expect(coordinator.enabled).toBe(false);
+    expect(coordinator.enabled).toBe(true);
   });
 });

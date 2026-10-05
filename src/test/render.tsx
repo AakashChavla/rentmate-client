@@ -6,6 +6,10 @@ import { QueryProvider } from '../providers/QueryProvider';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { MotionProvider } from '../providers/MotionProvider';
 import { CookieKeyValueStorage } from '../lib/cookie-key-value-storage';
+import { AuthProvider } from '../providers/AuthProvider';
+import { HttpAuthApi } from '../features/auth/api/auth-api';
+import { HttpUsersApi } from '../features/users/api/users-api';
+import { SingleFlightRefresh } from '../lib/api/refresh-coordinator';
 import { SystemClock } from '../lib/system-clock';
 import { FetchHttpClient } from '../lib/api/fetch-http-client';
 import { HttpHealthApi } from '../features/platform/api/health-api';
@@ -15,6 +19,9 @@ export function testServices(): Services {
   const http = new FetchHttpClient('http://localhost:3000');
   return {
     http,
+    auth: new HttpAuthApi(http),
+    users: new HttpUsersApi(http),
+    refresh: new SingleFlightRefresh(() => Promise.resolve()),
     health: new HttpHealthApi(http),
     clock: new SystemClock(),
     preferences: new CookieKeyValueStorage(),
@@ -30,7 +37,9 @@ export function renderApp(
       <ThemeProvider>
         <ServicesProvider services={services}>
           <QueryProvider>
-            <MotionProvider>{node}</MotionProvider>
+            <AuthProvider>
+              <MotionProvider>{node}</MotionProvider>
+            </AuthProvider>
           </QueryProvider>
         </ServicesProvider>
       </ThemeProvider>

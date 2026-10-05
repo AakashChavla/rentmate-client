@@ -1,3 +1,5 @@
+import { isPrivateRoute } from './lib/auth-policy';
+import { ROUTES, COOKIE_NAMES } from './config/app.constants';
 import { environment } from './lib/env';
 import { NextResponse, type NextRequest } from 'next/server';
 import {
@@ -16,7 +18,17 @@ export function proxy(request: NextRequest): NextResponse {
   const headers = new Headers(request.headers);
   headers.set(NONCE_HEADER, nonce);
   headers.set(CSP_HEADER, policy);
-  const response = NextResponse.next({ request: { headers } });
+  const url = request.nextUrl.clone();
+  const blocked = isPrivateRoute(url.pathname) && !request.cookies.has(COOKIE_NAMES.SESSION);
+  const next = url.pathname + url.search;
+  if (blocked) {
+    url.pathname = ROUTES.LOGIN;
+    url.search = '';
+    url.searchParams.set('next', next);
+  }
+  const response = blocked
+    ? NextResponse.redirect(url)
+    : NextResponse.next({ request: { headers } });
   response.headers.set(CSP_HEADER, policy);
   return response;
 }

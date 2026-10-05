@@ -1,5 +1,5 @@
-import { PlaceholderPage } from '@/features/foundation';
-import { messageKey } from '@/lib/i18n/message-key';
-export default function Page(): React.JSX.Element {
-  return <PlaceholderPage title={messageKey('common.members')} />;
+import { redirect } from 'next/navigation';
+import { USERS_ROUTE } from '@/config/auth.constants';
+export default function Page(): never {
+  redirect(USERS_ROUTE);
 }

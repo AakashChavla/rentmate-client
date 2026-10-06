@@ -1,5 +1,12 @@
 import { messageKey } from '../i18n/message-key';
 export const ERROR_KEYS = {
+  ILLEGAL_UNIT_TRANSITION: messageKey('errors.ILLEGAL_UNIT_TRANSITION'),
+  STALE_UNIT_STATUS: messageKey('errors.STALE_UNIT_STATUS'),
+  UNIT_IN_USE: messageKey('errors.UNIT_IN_USE'),
+  BED_NOT_SUPPORTED: messageKey('errors.BED_NOT_SUPPORTED'),
+  BED_CAPACITY_EXCEEDED: messageKey('errors.BED_CAPACITY_EXCEEDED'),
+  DUPLICATE_UNIT_CODE: messageKey('errors.DUPLICATE_UNIT_CODE'),
+  INVALID_UNIT_CONFIG: messageKey('errors.INVALID_UNIT_CONFIG'),
   INVALID_PROPERTY_CONFIG: messageKey('errors.INVALID_PROPERTY_CONFIG'),
   INVITE_INVALID: messageKey('errors.INVITE_INVALID'),
   INVITE_EXPIRED: messageKey('errors.INVITE_EXPIRED'),

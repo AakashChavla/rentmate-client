@@ -1,4 +1,5 @@
 'use client';
+import { OccupancyWidget } from '../../units';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -62,6 +63,7 @@ function DetailContent({ property: p }: { property: Property }): React.JSX.Eleme
           className="mt-6 rounded-2xl border border-border bg-card p-6"
         >
           <PropertyOverview property={p} />
+          <OccupancyWidget propertyId={p.id} />
         </TabsContent>
         <TabsContent value={T.SETTINGS} className="mt-6">
           <ConfigurationEditor property={p} />

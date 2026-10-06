@@ -1,3 +1,4 @@
+import { HttpUnitsApi } from '../features/units/api/units-api';
 import type { Services } from './services.contract';
 import { FetchHttpClient } from '../lib/api/fetch-http-client';
 import { SingleFlightRefresh } from '../lib/api/refresh-coordinator';
@@ -15,6 +16,7 @@ export function createServices(base: string, locale: () => string): Services {
   const http = new FetchHttpClient(base, locale, refresh);
   return {
     http,
+    units: new HttpUnitsApi(http),
     properties: new HttpPropertiesApi(http),
     organization: new HttpOrganizationApi(http),
     invitations: new HttpInvitationsApi(http),

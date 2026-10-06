@@ -1,3 +1,4 @@
+import { UNIT_ROUTE, UNIT_PERMISSION } from './unit.constants';
 import {
   Home,
   Building2,
@@ -16,6 +17,12 @@ import { PERMISSION as P, USERS_ROUTE } from './auth.constants';
 import { ROUTES } from './app.constants';
 import { messageKey } from '../lib/i18n/message-key';
 export const ADMIN_NAV = [
+  {
+    href: UNIT_ROUTE,
+    label: messageKey('unit.title'),
+    icon: Building2,
+    permission: UNIT_PERMISSION.READ,
+  },
   {
     href: DOMAIN_ROUTE.TEAM,
     label: messageKey('team.title'),

@@ -36,6 +36,214 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/properties/{propertyId}/floors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FloorsController_list"];
+        put?: never;
+        post: operations["FloorsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/floors/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FloorsController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["FloorsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["FloorsController_update"];
+        trace?: never;
+    };
+    "/api/v1/properties/{propertyId}/units": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UnitsController_propertyList"];
+        put?: never;
+        post: operations["UnitsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/units": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UnitsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/units/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UnitsController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["UnitsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["UnitsController_update"];
+        trace?: never;
+    };
+    "/api/v1/units/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UnitsController_status"];
+        trace?: never;
+    };
+    "/api/v1/units/{id}/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UnitsController_config"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UnitsController_setConfig"];
+        trace?: never;
+    };
+    "/api/v1/properties/{propertyId}/units/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["BulkUnitsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/properties/{propertyId}/units/bulk/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BulkUnitsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/units/{unitId}/beds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BedsController_list"];
+        put?: never;
+        post: operations["BedsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/beds/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BedsController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["BedsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["BedsController_update"];
+        trace?: never;
+    };
+    "/api/v1/beds/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["BedsController_status"];
+        trace?: never;
+    };
+    "/api/v1/properties/{propertyId}/occupancy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OccupancyController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/register": {
         parameters: {
             query?: never;
@@ -483,9 +691,146 @@ export interface components {
             postgres: boolean;
             redis: boolean;
         };
+        FloorDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            name: string;
+            level: number;
+            wing: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        FloorInputDto: {
+            name: string;
+            level: number;
+            wing?: string;
+        };
+        FloorPatchDto: {
+            name?: string;
+            level?: number;
+            wing?: string;
+        };
         NeutralDto: {
             /** @enum {boolean} */
             accepted: true;
+        };
+        UnitDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            floorId: string | null;
+            code: string;
+            /** @enum {string} */
+            type: "ROOM" | "FLAT" | "SHOP";
+            /** @enum {string} */
+            status: "VACANT" | "OCCUPIED" | "RESERVED" | "MAINTENANCE" | "BLOCKED";
+            baseRent: string;
+            capacity: number;
+            /** Format: date-time */
+            createdAt: string;
+            floorName?: string | null;
+            wing?: string | null;
+            floorLevel?: number | null;
+        };
+        UnitConfigPatchDto: {
+            amenities?: ("AC" | "WIFI" | "ATTACHED_BATHROOM" | "BALCONY" | "PARKING" | "WARDROBE" | "GEYSER" | "POWER_BACKUP")[];
+            size?: string | null;
+            /** @enum {string} */
+            furnishing?: "UNFURNISHED" | "SEMI_FURNISHED" | "FULLY_FURNISHED";
+        };
+        UnitInputDto: {
+            floorId?: string | null;
+            code: string;
+            /** @enum {string} */
+            type: "ROOM" | "FLAT" | "SHOP";
+            baseRent: string;
+            capacity: number;
+            configuration?: components["schemas"]["UnitConfigPatchDto"];
+        };
+        UnitPatchDto: {
+            floorId?: string | null;
+            code?: string;
+            /** @enum {string} */
+            type?: "ROOM" | "FLAT" | "SHOP";
+            baseRent?: string;
+            capacity?: number;
+        };
+        UnitStatusInputDto: {
+            /** @enum {string} */
+            status: "VACANT" | "OCCUPIED" | "RESERVED" | "MAINTENANCE" | "BLOCKED";
+            /** @enum {string} */
+            expectedStatus?: "VACANT" | "OCCUPIED" | "RESERVED" | "MAINTENANCE" | "BLOCKED";
+        };
+        UnitConfigDto: {
+            amenities: ("AC" | "WIFI" | "ATTACHED_BATHROOM" | "BALCONY" | "PARKING" | "WARDROBE" | "GEYSER" | "POWER_BACKUP")[];
+            size: string | null;
+            /** @enum {string} */
+            furnishing: "UNFURNISHED" | "SEMI_FURNISHED" | "FULLY_FURNISHED";
+        };
+        BulkResultDto: {
+            /** @enum {string} */
+            mode: "SYNC" | "QUEUED";
+            createdCount: number;
+            jobId: string | null;
+            /** @enum {string} */
+            status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED";
+        };
+        BulkPatternDto: {
+            floors: number;
+            perFloor: number;
+            prefix: string;
+            /** @default 1 */
+            startFloor: number;
+            /** @default 1 */
+            startNumber: number;
+            /** @default  */
+            wing: string;
+            /**
+             * @default ROOM
+             * @enum {string}
+             */
+            type: "ROOM" | "FLAT" | "SHOP";
+            /** @default 0.00 */
+            baseRent: string;
+            /** @default 1 */
+            capacity: number;
+        };
+        BulkJobDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            requestedBy: string;
+            pattern: components["schemas"]["BulkPatternDto"];
+            /** @enum {string} */
+            status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED";
+            createdCount: number;
+            errorCode: string | null;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        BedDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            unitId: string;
+            label: string;
+            /** @enum {string} */
+            status: "VACANT" | "OCCUPIED" | "RESERVED" | "MAINTENANCE" | "BLOCKED";
+            /** Format: date-time */
+            createdAt: string;
+        };
+        BedInputDto: {
+            label: string;
+        };
+        OccupancyCountDto: {
+            occupied: number;
+            total: number;
+            percent: number;
+        };
+        OccupancyDto: {
+            units: components["schemas"]["OccupancyCountDto"];
+            beds: components["schemas"]["OccupancyCountDto"];
         };
         RegisterDto: {
             email: string;
@@ -762,6 +1107,819 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReadyHealthDto"];
+                };
+            };
+        };
+    };
+    FloorsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["FloorDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FloorsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FloorInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["FloorDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FloorsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["FloorDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FloorsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FloorsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FloorPatchDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["FloorDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_propertyList: {
+        parameters: {
+            query?: {
+                propertyId?: string;
+                floorId?: string;
+                status?: string;
+                type?: string;
+                search?: string;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_list: {
+        parameters: {
+            query?: {
+                propertyId?: string;
+                floorId?: string;
+                status?: string;
+                type?: string;
+                search?: string;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitPatchDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_status: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitStatusInputDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_config: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitConfigDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    UnitsController_setConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitConfigPatchDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["UnitConfigDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BulkUnitsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkPatternDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BulkResultDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BulkUnitsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BulkJobDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BedDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BedInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BedDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BedDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BedInputDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BedDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BedsController_status: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitStatusInputDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["BedDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    OccupancyController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["OccupancyDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
                 };
             };
         };

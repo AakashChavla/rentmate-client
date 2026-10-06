@@ -58,3 +58,13 @@ Use Node 26.10.0 and Corepack Yarn 4.18.1. Before each new phase, verify current
 - [11-reusable-catalog](docs/ai/11-reusable-catalog.md)
 - [12-localization](docs/ai/12-localization.md)
 - [13-design-system-and-motion](docs/ai/13-design-system-and-motion.md)
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -1,5 +1,4 @@
-import { PlaceholderPage } from '@/features/foundation';
-import { messageKey } from '@/lib/i18n/message-key';
+import { TenantList } from '../../../features/tenants';
 export default function Page(): React.JSX.Element {
-  return <PlaceholderPage title={messageKey('common.tenants')} />;
+  return <TenantList />;
 }

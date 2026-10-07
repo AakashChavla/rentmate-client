@@ -49,6 +49,7 @@ export const PRIVATE_PREFIXES = [
   '/dashboard',
   '/properties',
   '/tenants',
+  '/leases',
   '/billing',
   '/complaints',
   '/visitors',

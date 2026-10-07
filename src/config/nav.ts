@@ -1,3 +1,4 @@
+import { RENTAL_ROUTE, RENTAL_PERMISSION } from './lease.constants';
 import { UNIT_ROUTE, UNIT_PERMISSION } from './unit.constants';
 import {
   Home,
@@ -17,6 +18,12 @@ import { PERMISSION as P, USERS_ROUTE } from './auth.constants';
 import { ROUTES } from './app.constants';
 import { messageKey } from '../lib/i18n/message-key';
 export const ADMIN_NAV = [
+  {
+    href: RENTAL_ROUTE.LEASES,
+    label: messageKey('rental.leases'),
+    icon: FileText,
+    permission: RENTAL_PERMISSION.LEASE_READ,
+  },
   {
     href: UNIT_ROUTE,
     label: messageKey('unit.title'),

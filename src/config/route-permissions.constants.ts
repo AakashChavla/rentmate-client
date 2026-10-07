@@ -1,7 +1,9 @@
+import { RENTAL_ROUTE, RENTAL_PERMISSION } from './lease.constants';
 import { UNIT_ROUTE, UNIT_PERMISSION } from './unit.constants';
 import { DOMAIN_PERMISSION } from './property.constants';
 import { PERMISSION as P } from './auth.constants';
 export const ROUTE_PERMISSIONS = [
+  [RENTAL_ROUTE.LEASES, RENTAL_PERMISSION.LEASE_READ],
   [UNIT_ROUTE, UNIT_PERMISSION.READ],
   ['/settings/team', DOMAIN_PERMISSION.INVITE],
   ['/settings/users', P.USER_READ],

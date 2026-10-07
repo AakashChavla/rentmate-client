@@ -10,3 +10,5 @@ export { RecoveryForm } from './components/RecoveryForm';
 export { ProfileForm } from './components/ProfileForm';
 export { useAuthSubmission } from './hooks/use-auth-submission';
 export { AuthErrorNotice } from './components/AuthErrorNotice';
+
+export { usePermissionChecker } from './hooks/use-permission';

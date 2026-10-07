@@ -1,3 +1,6 @@
+import { HttpTenantsApi } from '../features/tenants/api/tenants-api';
+import { BrowserUploadClient } from '../features/tenants/api/upload-client';
+import { HttpLeasesApi } from '../features/leases/api/leases-api';
 import { HttpUnitsApi } from '../features/units/api/units-api';
 import type { Services } from './services.contract';
 import { FetchHttpClient } from '../lib/api/fetch-http-client';
@@ -16,6 +19,8 @@ export function createServices(base: string, locale: () => string): Services {
   const http = new FetchHttpClient(base, locale, refresh);
   return {
     http,
+    tenants: new HttpTenantsApi(http, new BrowserUploadClient(base, locale, refresh)),
+    leases: new HttpLeasesApi(http),
     units: new HttpUnitsApi(http),
     properties: new HttpPropertiesApi(http),
     organization: new HttpOrganizationApi(http),

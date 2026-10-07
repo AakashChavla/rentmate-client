@@ -32,5 +32,11 @@
   "BED_NOT_SUPPORTED": "बेड केवल पीजी के कमरों में उपलब्ध हैं।",
   "BED_CAPACITY_EXCEEDED": "बेड की संख्या क्षमता से अधिक है।",
   "DUPLICATE_UNIT_CODE": "यह इकाई कोड इस संपत्ति में पहले से है।",
-  "INVALID_UNIT_CONFIG": "इकाई कॉन्फ़िगरेशन जाँचें।"
+  "INVALID_UNIT_CONFIG": "इकाई कॉन्फ़िगरेशन जाँचें।",
+  "LEASE_OVERLAP": "इन तारीखों के लिए यूनिट या बेड पहले से बुक है।",
+  "ILLEGAL_LEASE_TRANSITION": "लीज़ की स्थिति में यह बदलाव अनुमत नहीं है।",
+  "TENANT_KYC_REQUIRED": "पहले किरायेदार और उनके दस्तावेज़ सत्यापित करें।",
+  "DOCUMENT_MIME_INVALID": "मान्य PDF, JPEG या PNG फ़ाइल अपलोड करें।",
+  "DOCUMENT_TOO_LARGE": "दस्तावेज़ 10 MB सीमा से बड़ा है।",
+  "DOCUMENT_URL_EXPIRED": "दस्तावेज़ लिंक की अवधि समाप्त हो गई है। नया लिंक लें।"
 }

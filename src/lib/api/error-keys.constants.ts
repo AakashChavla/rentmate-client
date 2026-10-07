@@ -1,5 +1,11 @@
 import { messageKey } from '../i18n/message-key';
 export const ERROR_KEYS = {
+  LEASE_OVERLAP: messageKey('errors.LEASE_OVERLAP'),
+  ILLEGAL_LEASE_TRANSITION: messageKey('errors.ILLEGAL_LEASE_TRANSITION'),
+  TENANT_KYC_REQUIRED: messageKey('errors.TENANT_KYC_REQUIRED'),
+  DOCUMENT_MIME_INVALID: messageKey('errors.DOCUMENT_MIME_INVALID'),
+  DOCUMENT_TOO_LARGE: messageKey('errors.DOCUMENT_TOO_LARGE'),
+  DOCUMENT_URL_EXPIRED: messageKey('errors.DOCUMENT_URL_EXPIRED'),
   ILLEGAL_UNIT_TRANSITION: messageKey('errors.ILLEGAL_UNIT_TRANSITION'),
   STALE_UNIT_STATUS: messageKey('errors.STALE_UNIT_STATUS'),
   UNIT_IN_USE: messageKey('errors.UNIT_IN_USE'),

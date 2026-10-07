@@ -7,3 +7,11 @@ export function useCan(permission: string, scope: { propertyId?: string } = {}):
 export function useHasPermission(permission: string): boolean {
   return canNavigate(useAuth().me, permission);
 }
+
+export function usePermissionChecker(): (
+  permission: string,
+  scope?: { propertyId?: string },
+) => boolean {
+  const auth = useAuth();
+  return (permission, scope = {}) => can(auth.me, permission, scope);
+}

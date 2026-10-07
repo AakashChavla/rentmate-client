@@ -1,3 +1,5 @@
+import { HttpTenantsApi, BrowserUploadClient } from '../features/tenants';
+import { HttpLeasesApi } from '../features/leases';
 import { HttpUnitsApi } from '../features/units/api/units-api';
 import { render, type RenderResult } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
@@ -23,6 +25,8 @@ export function testServices(): Services {
   const http = new FetchHttpClient('http://localhost:3000');
   return {
     http,
+    tenants: new HttpTenantsApi(http, new BrowserUploadClient('http://localhost:3000', () => 'en')),
+    leases: new HttpLeasesApi(http),
     units: new HttpUnitsApi(http),
     properties: new HttpPropertiesApi(http),
     organization: new HttpOrganizationApi(http),

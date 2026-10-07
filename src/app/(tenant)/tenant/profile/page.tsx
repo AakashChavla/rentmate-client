@@ -1,4 +1,4 @@
-import { ProfileForm } from '@/features/auth';
+import { TenantProfile } from '../../../../features/tenants';
 export default function Page(): React.JSX.Element {
-  return <ProfileForm />;
+  return <TenantProfile />;
 }

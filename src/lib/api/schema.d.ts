@@ -36,6 +36,262 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/tenants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TenantsController_list"];
+        put?: never;
+        post: operations["TenantsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tenants/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TenantsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["TenantsController_update"];
+        trace?: never;
+    };
+    "/api/v1/tenants/{id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TenantsController_review"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tenants/{id}/invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TenantsController_invite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tenants/{id}/documents/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["DocumentsController_upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tenants/{id}/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DocumentsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/{id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["DocumentsController_review"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/{id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DocumentsController_download"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/{id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DocumentsController_content"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["DocumentsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LeasesController_list"];
+        put?: never;
+        post: operations["LeasesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["LeasesController_available"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["LeasesController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases/{id}/deposit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["LeasesController_deposit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases/{id}/renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["LeasesController_renew"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/leases/{id}/terminate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["LeasesController_terminate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/properties/{propertyId}/floors": {
         parameters: {
             query?: never;
@@ -691,6 +947,145 @@ export interface components {
             postgres: boolean;
             redis: boolean;
         };
+        TenantDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            fullName: string;
+            phone: string;
+            email: string;
+            /** @enum {string} */
+            status: "PENDING_KYC" | "VERIFIED" | "REJECTED" | "INACTIVE";
+            userId: string | null;
+            emergencyContact: string | null;
+            maskedId: string | null;
+            reviewReason: string | null;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        TenantInputDto: {
+            /** Format: uuid */
+            propertyId: string;
+            fullName: string;
+            phone: string;
+            email: string;
+            emergencyContact?: string;
+            idNumber?: string;
+        };
+        TenantPatchDto: {
+            fullName?: string;
+            phone?: string;
+            emergencyContact?: string;
+        };
+        TenantReviewDto: {
+            /** @enum {string} */
+            status: "VERIFIED" | "REJECTED" | "INACTIVE";
+            reason?: string;
+        };
+        NeutralDto: {
+            /** @enum {boolean} */
+            accepted: true;
+        };
+        DocumentDto: {
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            tenantId: string;
+            /** @enum {string} */
+            type: "AADHAAR" | "PAN" | "PASSPORT" | "PHOTO" | "OTHER";
+            mime: string;
+            size: number;
+            /** @enum {string} */
+            status: "PENDING" | "VERIFIED" | "REJECTED";
+            reviewedBy: string | null;
+            reviewReason: string | null;
+            createdAt: string;
+        };
+        DocumentReviewDto: {
+            /** @enum {string} */
+            status: "VERIFIED" | "REJECTED";
+            reason?: string;
+        };
+        SignedDocumentDto: {
+            url: string;
+            expiresAt: string;
+        };
+        LeaseDto: {
+            /** Format: uuid */
+            tenantId: string;
+            /** Format: uuid */
+            unitId: string;
+            /** Format: date */
+            startDate: string;
+            /** Format: date */
+            endDate: string;
+            rent: string;
+            deposit: string;
+            dueDay: number;
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            bedId: string | null;
+            members: string[];
+            /** @enum {string} */
+            status: "PENDING_DEPOSIT" | "ACTIVE" | "EXPIRING" | "EXPIRED" | "RENEWED" | "TERMINATED";
+            renewedFromId: string | null;
+            terminatedAt: string | null;
+            terminateReason: string | null;
+            depositRecordedAt: string | null;
+            depositReference: string | null;
+            createdAt: string;
+        };
+        LeaseInputDto: {
+            /** Format: uuid */
+            tenantId: string;
+            /** Format: uuid */
+            unitId: string;
+            /** Format: uuid */
+            bedId?: string | null;
+            /** Format: date */
+            startDate: string;
+            /** Format: date */
+            endDate: string;
+            rent: string;
+            deposit: string;
+            dueDay: number;
+            members?: string[];
+        };
+        AvailabilityDto: {
+            available: boolean;
+        };
+        LeaseSummaryDto: {
+            /** Format: uuid */
+            tenantId: string;
+            /** Format: uuid */
+            unitId: string;
+            /** Format: date */
+            startDate: string;
+            /** Format: date */
+            endDate: string;
+            rent: string;
+            deposit: string;
+            dueDay: number;
+            id: string;
+            organizationId: string;
+            propertyId: string;
+            bedId: string | null;
+            /** @enum {string} */
+            status: "PENDING_DEPOSIT" | "ACTIVE" | "EXPIRING" | "EXPIRED" | "RENEWED" | "TERMINATED";
+            renewedFromId: string | null;
+            terminatedAt: string | null;
+            terminateReason: string | null;
+            depositRecordedAt: string | null;
+            depositReference: string | null;
+            createdAt: string;
+        };
+        DepositDto: {
+            reference: string;
+        };
+        TerminateDto: {
+            reason: string;
+        };
         FloorDto: {
             id: string;
             organizationId: string;
@@ -710,10 +1105,6 @@ export interface components {
             name?: string;
             level?: number;
             wing?: string;
-        };
-        NeutralDto: {
-            /** @enum {boolean} */
-            accepted: true;
         };
         UnitDto: {
             id: string;
@@ -1107,6 +1498,672 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReadyHealthDto"];
+                };
+            };
+        };
+    };
+    TenantsController_list: {
+        parameters: {
+            query?: {
+                propertyId?: string;
+                tenantId?: string;
+                status?: string;
+                search?: string;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["TenantDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    TenantsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["TenantDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    TenantsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["TenantDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    TenantsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantPatchDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["TenantDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    TenantsController_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantReviewDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["TenantDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    TenantsController_invite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DocumentsController_upload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["DocumentDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DocumentsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["DocumentDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DocumentsController_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentReviewDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["DocumentDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DocumentsController_download: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["SignedDocumentDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DocumentsController_content: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    DocumentsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["NeutralDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_list: {
+        parameters: {
+            query?: {
+                propertyId?: string;
+                tenantId?: string;
+                status?: string;
+                search?: string;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseSummaryDto"][];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeaseInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_available: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeaseInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["AvailabilityDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_deposit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DepositDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_renew: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeaseInputDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LeasesController_terminate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TerminateDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        success: true;
+                        data: components["schemas"]["LeaseDto"];
+                        meta: {
+                            requestId: string;
+                            /** Format: date-time */
+                            timestamp: string;
+                            page?: {
+                                limit?: number;
+                                hasNext?: boolean;
+                                nextCursor?: string | null;
+                            };
+                        };
+                    };
                 };
             };
         };

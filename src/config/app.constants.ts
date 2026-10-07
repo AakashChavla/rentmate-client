@@ -69,4 +69,4 @@ export const FORMAT = {
   TIMEZONE: 'Asia/Kolkata',
   LOCALE: { en: 'en-IN', hi: 'hi-IN' },
 } as const;
-export const API_STATUS = { UNAUTHORIZED: 401 } as const;
+export const API_STATUS = { UNAUTHORIZED: 401, BAD_REQUEST: 400 } as const;
